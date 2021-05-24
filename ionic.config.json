@@ -1,5 +1,7 @@
 {
   "name": "frontbiblio",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
