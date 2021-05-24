@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.item {
+  width: 100%;
+  height: 10vh;
+  // background-color: blue;
+  background-image: url("../../../assets/images/plank.svg");
+  color: white;
+  position: relative;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.contenu {
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  transform: translateY(-50%);
+  width: 100%;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 5vh;
+}
+
+.titre {
+  padding: 5px;
+}
+
+.book {
+  background-image: url("../../../assets/images/biblio.svg");
+  width: 100%;
+  height: 100vh;
+}
+
+ion-content {
+  --ion-background-color: #3880ff;
+}
