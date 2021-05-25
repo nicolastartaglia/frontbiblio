@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Animation, AnimationController } from '@ionic/angular';
+import { BibliothecaireService } from '../../api/bibliothecaire.service';
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,13 @@ import { Animation, AnimationController } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
 
-  constructor(private animationCtrl: AnimationController) {
+  public menuHome = [
+    { title: 'Rechercher', url: '/rechercher' },
+    { title: 'Contact', url: '/contact'},
+    { title: 'Se connecter', url: '/login'}
+  ];
 
-  }
+  constructor(private animationCtrl: AnimationController, private bibliothecaireService: BibliothecaireService) {}
 
   ngOnInit() {
     const animation1: Animation = this.animationCtrl.create()
@@ -38,7 +43,10 @@ export class HomePage implements OnInit {
     animation1.play();
     animation2.play();
     animation3.play();
+    this.bibliothecaireService.pages$.next(this.menuHome);
 
   }
+
+
 
 }

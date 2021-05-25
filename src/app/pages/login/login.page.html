@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Connexion en tant que bibliothécaire</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="connexion" (ngSubmit)="seConnecter()" novalidate>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input formControlName="Email" type="email"></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.Email.errors?.required">
+      Adresse email requise
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.Email.errors?.pattern">
+      Saisissez votre adresse email
+    </span>
+    <ion-item lines="full">
+      <ion-label position="floating">Mot de passe</ion-label>
+      <ion-input formControlName="Password" type="password"></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.Password.errors?.required">
+      Mot de passe requis
+    </span>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.Password.errors?.minlength">
+      Name should be min 2 chars long.
+    </span>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="danger" expand="block">Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

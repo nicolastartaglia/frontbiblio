@@ -10,6 +10,30 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'contact',
+    loadChildren: () => import('./pages/contact/contact.module').then( m => m.ContactPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'rechercher',
+    loadChildren: () => import('./pages/rechercher/rechercher.module').then( m => m.RechercherPageModule)
+  },
+  {
+    path: 'referent',
+    loadChildren: () => import('./pages/referent/referent.module').then( m => m.ReferentPageModule)
+  },
+  {
+    path: 'bibliothecaire',
+    loadChildren: () => import('./pages/bibliothecaire/bibliothecaire.module').then( m => m.BibliothecairePageModule)
+  },
+  {
+    path: 'logout',
+    loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
   }
 ];
 
