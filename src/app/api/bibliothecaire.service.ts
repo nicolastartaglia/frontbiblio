@@ -95,6 +95,20 @@ export class BibliothecaireService {
     sessionStorage.removeItem('biblio');
   }
 
+
+  obtenirTousLesBibliothecaires(): Observable<any> {
+    return this.httpClient.get(this.baseUrl)
+      .pipe(
+        map((data: any) => {
+
+            console.log(data);
+      
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

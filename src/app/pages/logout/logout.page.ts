@@ -16,8 +16,10 @@ export class LogoutPage implements OnInit {
   ngOnInit() {
     console.log("toto");
     this.bibliothecaireService.seDeconnecter();
-    this.router.navigateByUrl("/referent");
-
+    this.router.navigateByUrl('');
+    console.log("ngOnInit logout page");
   }
+
+  
 
 }

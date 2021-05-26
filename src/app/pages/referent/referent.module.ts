@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ReferentPageRoutingModule } from './referent-routing.module';
 
 import { ReferentPage } from './referent.page';
+import { NomPipe } from '../../pipes/nom.pipe';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ReferentPage } from './referent.page';
     IonicModule,
     ReferentPageRoutingModule
   ],
-  declarations: [ReferentPage]
+  declarations: [ReferentPage, NomPipe]
 })
 export class ReferentPageModule {}

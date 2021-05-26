@@ -18,6 +18,12 @@ export class HomePage implements OnInit {
   constructor(private animationCtrl: AnimationController, private bibliothecaireService: BibliothecaireService) {}
 
   ngOnInit() {
+    this.animerPage();
+    this.bibliothecaireService.pages$.next(this.menuHome);
+    console.log("ngOnInit home page");
+  }
+
+  animerPage() {
     const animation1: Animation = this.animationCtrl.create()
     .addElement(document.querySelector('#it1'))
     .duration(800)
@@ -43,10 +49,7 @@ export class HomePage implements OnInit {
     animation1.play();
     animation2.play();
     animation3.play();
-    this.bibliothecaireService.pages$.next(this.menuHome);
 
   }
-
-
 
 }
