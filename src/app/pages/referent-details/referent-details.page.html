@@ -5,55 +5,78 @@
 </ion-header>
 
 <ion-content>
-  <ion-list lines="full">
+  <ion-grid>
     <form [formGroup]="editForm" (ngSubmit)="mettreAjourBibliothecaire()">
-
-
-      <ion-item>
-        <ion-label position="floating">Nom</ion-label>
-        <ion-input formControlName="Nom" type="text" required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Prénom</ion-label>
-        <ion-input formControlName="Prenom" type="text" required>
-        </ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label position="floating">Email</ion-label>
-        <ion-input formControlName="Email" type="text" required>
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input formControlName="Password" type="password" required>
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Referent</ion-label>
-        <ion-input formControlName="Referent" type="text" required>
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Statut</ion-label>
-        <ion-input formControlName="Statut" type="text" required>
-        </ion-input>
-      </ion-item>
-
-      <ion-row>
-        <ion-col>
-          <ion-button type="submit" color="primary" shape="full" expand="block">
-            Mettre à jour
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button color="danger" shape="full" expand="block" (click)="retour()">
-            Annuler
-          </ion-button>
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Nom</ion-label>
+          <ion-input formControlName="Nom" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Prénom</ion-label>
+          <ion-input formControlName="Prenom" type="text" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Email</ion-label>
+          <ion-input formControlName="Email" type="text" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Password</ion-label>
+          <ion-input formControlName="Password" type="password" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Referent</ion-label>
+          <ion-input formControlName="Referent" type="text" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Statut</ion-label>
+          <ion-input formControlName="Statut" type="text" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-row>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button type="submit" color="primary" shape="full" expand="block">
+              Mettre à jour
+            </ion-button>
+          </ion-col>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button color="danger" shape="full" expand="block" (click)="retour()">
+              Annuler
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
     </form>
-  </ion-list>
+  </ion-grid>
 </ion-content>
 
