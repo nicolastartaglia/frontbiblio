@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="titre"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span class="titre">Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Bibliothécaires
+    </ion-list-header>
+
+    <ion-item lines="inset" *ngFor="let bibliothecaire of bibliothecaires | nom">
+      <ion-label>
+        <h5>{{bibliothecaire.Nom}}</h5>
+        <p>{{bibliothecaire.Prenom}}</p>
+      </ion-label>
+
+      <div class="item-note" item-end>
+        <ion-icon name="create" style="zoom:2.0" [routerLink]="['/user-details/', bibliothecaire.Id]"></ion-icon>
+        <ion-icon name="trash" style="zoom:2.0" (click)="supprimerBibliothecaire(bibliothecaire.Id)"></ion-icon>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
