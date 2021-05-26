@@ -1,5 +1,5 @@
 export class Bibliothecaire {
-  public Id: number;
+  public id: number;
   public Nom: string;
   public Prenom: string;
   public Email: string;
@@ -7,7 +7,7 @@ export class Bibliothecaire {
   public Referent: boolean;
   public Statut: string;
 
-  constructor( Id: number,
+  constructor( id: number,
                Nom: string,
                Prenom: string,
                Email: string,
@@ -15,7 +15,7 @@ export class Bibliothecaire {
                Referent: boolean,
                Statut: string ) {
 
-    this.Id = Id,
+    this.id = id,
     this.Nom = Nom;
     this.Prenom = Prenom;
     this.Email = Email;

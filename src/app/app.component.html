@@ -11,6 +11,10 @@
               <!-- <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon> -->
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
+            <ion-item  *ngIf="seDeconnecte$.value.affiche && i == 0" (click)="seDeconnecter()">
+              <ion-label>Se déconnecter </ion-label>
+
+            </ion-item>
           </ion-menu-toggle>
         </ion-list>
 

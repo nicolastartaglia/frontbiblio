@@ -13,10 +13,10 @@ export class LoginPage implements OnInit {
   connexion: FormGroup;
   isSubmitted = false;
   seConnecter$: any;
-  menuReferent = [
-    {url:'/rechercher', title: 'Rechercher'},
-    {url:'/logout', title: 'Se déconnecter'}
-  ];
+  // menuReferent = [
+  //   {url:'/rechercher', title: 'Rechercher'},
+  //   {url:'/logout', title: 'Se déconnecter'}
+  // ];
 
 
   constructor(public formBuilder: FormBuilder,
@@ -49,7 +49,8 @@ export class LoginPage implements OnInit {
           () => {
             if (this.bibliothecaireService.estConnecte()) {
               if (this.bibliothecaireService.estReferent()) {
-                this.bibliothecaireService.pages$.next(this.menuReferent);
+                // this.bibliothecaireService.pages$.next(this.menuReferent);
+                // this.bibliothecaireService.seDeconnecte$.next({affiche: true});
                 this.router.navigateByUrl('/referent');
               } else {
                 this.router.navigateByUrl('/bibliothecaire');
