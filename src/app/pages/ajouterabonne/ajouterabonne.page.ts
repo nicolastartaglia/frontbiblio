@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BibliothecaireService } from 'src/app/api/bibliothecaire.service';
+import { AbonneService } from '../../api/abonne.service';
 
 @Component({
   selector: 'app-ajouterabonne',
@@ -8,29 +10,55 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AjouterabonnePage implements OnInit {
 
-  dateLimite: Date;
-  dateLimiteFormatee = ''
+  dateLimiteFormatee = '';
   addForm: FormGroup;
+  Nom = '';
+  Prenom = '';
+  message = '';
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private bibliothecaireService: BibliothecaireService, private abonneService: AbonneService) { }
 
   ngOnInit() {
-    this.dateLimite = new Date();
-    this.dateLimiteFormatee = this.dateLimite.toLocaleDateString();
+    const dateJour = new Date();
+    const dateLimite = new Date(dateJour.setDate(dateJour.getDate() + 365));
+    this.dateLimiteFormatee = dateLimite.toLocaleDateString();
+
+    const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
+    const datedb = this.dateLimiteFormatee.replace(pattern, '$3-$2-$1');
+    const idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
     this.addForm = this.formBuilder.group({
-      Nom: [''],
-      Prenom: [''],
+      id: [0],
+      Prenom: ['', [Validators.required]],
+      Nom: ['', [Validators.required]],
       Email: ['', [Validators.required, Validators.email]],
       Rue: [''],
       CodePostal: [''],
-      Ville: ['']
+      Ville: [''],
+      DateLimiteAbonnement: [datedb],
+      Amende: [0],
+      PenaliteNbJours: [0],
+      CreePar: [idBibliothecaire],
+      MisAJourPar: [idBibliothecaire]
     });
 
 
   }
 
   ajouterAbonne() {
+    this.abonneService.ajouterUnAbonne(this.addForm.value).subscribe((id) => {
+      this.message = "Abonné enregistré et identifié avec le numéro: "+id;
+    });
+    this.addForm.patchValue({
+      Nom: '',
+      Prenom: '',
+      Email: '',
+      Rue: '',
+      CodePostal: '',
+      Ville: ''
+    });
 
   }
+
+
 
 }
