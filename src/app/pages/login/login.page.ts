@@ -13,10 +13,11 @@ export class LoginPage implements OnInit {
   connexion: FormGroup;
   isSubmitted = false;
   seConnecter$: any;
-  menuReferent = [
-    {url:'/rechercher', title: 'Rechercher'},
-    {url:'/logout', title: 'Se déconnecter'}
-  ];
+  message = '';
+  // menuReferent = [
+  //   {url:'/rechercher', title: 'Rechercher'},
+  //   {url:'/logout', title: 'Se déconnecter'}
+  // ];
 
 
   constructor(public formBuilder: FormBuilder,
@@ -46,14 +47,17 @@ export class LoginPage implements OnInit {
 
       this.seConnecter$ = this.bibliothecaireService.seConnecter(this.connexion.value)
         .subscribe(
-          () => {
+          (data) => {
             if (this.bibliothecaireService.estConnecte()) {
               if (this.bibliothecaireService.estReferent()) {
-                this.bibliothecaireService.pages$.next(this.menuReferent);
+                // this.bibliothecaireService.pages$.next(this.menuReferent);
+                // this.bibliothecaireService.seDeconnecte$.next({affiche: true});
                 this.router.navigateByUrl('/referent');
               } else {
                 this.router.navigateByUrl('/bibliothecaire');
               }
+            } else {
+              this.message = data.message;
             }
           }
           ,

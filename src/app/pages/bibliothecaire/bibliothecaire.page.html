@@ -1,9 +1,42 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>bibliothecaire</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="titre"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span class="titre">Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <div class="book">
+  <ion-grid>
+    <ion-row [routerLink]="['/rechercher']">
+      <ion-col  size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <div id="it1" class="item">
+          <div class="contenu">Rechercher</div>
+          <!-- <img id="rechercher" src="../../assets/images/search.svg"/> -->
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row [routerLink]="['/contact']">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <div id="it2" class="item">
+          <div class="contenu">Contact</div>
+          <!-- <img id="map" src="../../assets/images/map.svg"/> -->
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row [routerLink]="['/login']">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <div id="it3" class="item">
+          <div class="contenu">Se connecter</div>
+          <!-- <img id="avatar" src="../../assets/images/avatar.svg"/> -->
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
 </ion-content>
+

@@ -34,7 +34,16 @@ const routes: Routes = [
   {
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
+  },
+  {
+    path: 'referent-details/:idReferent',
+    loadChildren: () => import('./pages/referent-details/referent-details.module').then( m => m.ReferentDetailsPageModule)
+  },  {
+    path: 'emprunt',
+    loadChildren: () => import('./pages/emprunt/emprunt.module').then( m => m.EmpruntPageModule)
   }
+
+
 ];
 
 @NgModule({

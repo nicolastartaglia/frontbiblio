@@ -4,19 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ReferentPageRoutingModule } from './referent-routing.module';
+import { ReferentDetailsPageRoutingModule } from './referent-details-routing.module';
 
-import { ReferentPage } from './referent.page';
-import { NomPipe } from '../../pipes/nom.pipe';
+import { ReferentDetailsPage } from './referent-details.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ReferentPageRoutingModule,
+    ReferentDetailsPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [ReferentPage, NomPipe]
+  declarations: [ReferentDetailsPage]
 })
-export class ReferentPageModule {}
+export class ReferentDetailsPageModule {}

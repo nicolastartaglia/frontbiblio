@@ -9,17 +9,16 @@ import { BibliothecaireService } from '../../api/bibliothecaire.service';
 })
 export class HomePage implements OnInit {
 
-  public menuHome = [
-    { title: 'Rechercher', url: '/rechercher' },
-    { title: 'Contact', url: '/contact'},
-    { title: 'Se connecter', url: '/login'}
-  ];
+  
+
+
 
   constructor(private animationCtrl: AnimationController, private bibliothecaireService: BibliothecaireService) {}
 
   ngOnInit() {
     this.animerPage();
-    this.bibliothecaireService.pages$.next(this.menuHome);
+
+
     console.log("ngOnInit home page");
   }
 

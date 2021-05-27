@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-
 interface CorpsJeton {
   id: string;
   Nom: string;
@@ -22,21 +21,26 @@ interface CorpsJeton {
   providedIn: 'root'
 })
 export class BibliothecaireService {
-  pages$: BehaviorSubject<{url: string, title: string}[]> =
+  pages$: BehaviorSubject<{ url: string, title: string }[]> =
     new BehaviorSubject([
-      {url:'/rechercher', title: 'Rechercher'},
-      {url:'/contact', title: 'Contact'},
-      {url:'/login', title: 'Se connecter'}
+      { url: '/rechercher', title: 'Rechercher' },
+      { url: '/contact', title: 'Contact' },
+      { url: '/login', title: 'Se connecter' }
     ]);
 
-  baseUrl = "http://localhost:8082/bibliothecaire";
+  seDeconnecte$: BehaviorSubject<{ affiche: boolean }> = new BehaviorSubject({ affiche: false });
+
+  refreshBibliothecaires = new BehaviorSubject<boolean>(true);
+
+  baseUrl = "http://localhost:8082/bibliothecaire/";
+
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   private jeton: string;
 
   constructor(private httpClient: HttpClient, private router: Router) { }
 
-  private enregistrerJeton( jeton: string ) {
+  private enregistrerJeton(jeton: string) {
     sessionStorage.setItem('biblio', jeton);
     this.jeton = jeton;
   }
@@ -48,18 +52,24 @@ export class BibliothecaireService {
     return this.jeton;
   }
 
+  mettreAJourLesEntetes(jeton: string) {
+    this.headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                    .set('x-access-token', jeton);
+  }
+
   seConnecter(bibliothecaire: Connexion): Observable<any> {
-    return this.httpClient.post(this.baseUrl+"/connexion", bibliothecaire)
+    return this.httpClient.post(this.baseUrl + "connexion", bibliothecaire)
       .pipe(
         map((data: any) => {
           if (data.accessToken) {
             this.enregistrerJeton(data.accessToken);
+            this.mettreAJourLesEntetes(data.accessToken);
           }
           return data;
         }),
         catchError(this.errorMgmt)
       );
-      // return this.http.get(`${this.url}/getOne/${id}`);
+    // return this.http.get(`${this.url}/getOne/${id}`);
   }
 
 
@@ -97,13 +107,62 @@ export class BibliothecaireService {
 
 
   obtenirTousLesBibliothecaires(): Observable<any> {
-    return this.httpClient.get(this.baseUrl)
+    console.log(this.headers );
+    return this.httpClient.get(this.baseUrl, { headers: this.headers })
       .pipe(
         map((data: any) => {
-
-            console.log(data);
-      
+          if(!data.message) {
+            data.sort((a, b) => {
+              return a.Nom.localeCompare(b.Nom);
+            });
+          }
+          console.log(data);
           return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  obtenirUnBibliothecaire(id: number): Observable<any> {
+    return this.httpClient.get(this.baseUrl + id, { headers: this.headers })
+      .pipe(
+        map((data: any) => {
+          console.log(data);
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  mettreAjourUnBibliothecaire(id: number, data: Bibliothecaire): Observable<any> {
+    return this.httpClient.put(this.baseUrl + id, data, { headers: this.headers })
+      .pipe(
+        map((res: any) => {
+          console.log(res);
+          return res;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  ajouterUnBibliothecaire(data: Bibliothecaire): Observable<any> {
+    return this.httpClient.post(this.baseUrl, data, { headers: this.headers })
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+
+  supprimerUnBibliothecaire(id: number): Observable<any> {
+    return this.httpClient.delete(this.baseUrl + id, { headers: this.headers })
+      .pipe(
+        map((res: any) => {
+
+          console.log(res);
+          return res;
         }),
         catchError(this.errorMgmt)
       );
