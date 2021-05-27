@@ -50,8 +50,8 @@ export class ReferentPage implements OnInit {
           this.Nom = data.Nom;
           this.Prenom = data.Prenom;
       });
-      this.bibliothecaireService.pages$.next(this.menuReferent);
-      this.bibliothecaireService.seDeconnecte$.next({affiche: true});
+      // this.bibliothecaireService.pages$.next(this.menuReferent);
+      // this.bibliothecaireService.seDeconnecte$.next({affiche: true});
       this.bibliothecaires = this.bibliothecaireService.refreshBibliothecaires.pipe(switchMap(_ => this.bibliothecaireService.obtenirTousLesBibliothecaires()));
     } else {
       this.router.navigateByUrl('');

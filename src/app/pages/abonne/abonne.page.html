@@ -6,47 +6,48 @@
     <ion-thumbnail slot="start">
       <ion-img src="assets/images/logo.svg" class="titre"></ion-img>
     </ion-thumbnail>
-    <ion-title><span class="titre">Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
+    <ion-title><span class="titre">Bienvenue {{ Prenom }} {{ Nom }} - Les abonnés</span></ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <div class="book">
   <ion-grid>
-    <ion-row [routerLink]="['/emprunt']">
+    <ion-row [routerLink]="['/rechercheabonne']">
       <ion-col  size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <div id="it1" class="item">
-          <div class="contenu">Emprunts</div>
+          <div class="contenu">Rechercher</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row [routerLink]="['/retour']">
+    <ion-row [routerLink]="['/ajouterabonne']">
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <div id="it2" class="item">
-          <div class="contenu">Retours</div>
+          <div class="contenu">Ajouter</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row (click)="allerVersLesAbonnes()">
+    <ion-row [routerLink]="['/modifierabonne']">
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <div id="it3" class="item">
-          <div class="contenu">Abonnés</div>
+          <div class="contenu">Modifier</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row [routerLink]="['/commentaire']">
+    <ion-row [routerLink]="['/supprimerabonne']">
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <div id="it4" class="item">
-          <div class="contenu">Commentaires</div>
+          <div class="contenu">Supprimer</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row [routerLink]="['/mediatheque']">
+    <ion-row (click)="revenir()">
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <div id="it5" class="item">
-          <div class="contenu">Médiathèque</div>
+          <div class="contenu">Terminer</div>
         </div>
       </ion-col>
     </ion-row>
+
   </ion-grid>
 </div>
 </ion-content>

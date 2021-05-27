@@ -4,23 +4,15 @@ import { Animation, AnimationController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-bibliothecaire',
-  templateUrl: './bibliothecaire.page.html',
-  styleUrls: ['./bibliothecaire.page.scss'],
+  selector: 'app-abonne',
+  templateUrl: './abonne.page.html',
+  styleUrls: ['./abonne.page.scss'],
 })
-export class BibliothecairePage implements OnInit {
+export class AbonnePage implements OnInit {
 
   Nom = '';
   Prenom = '';
   idBibliothecaire: number;
-
-  menuBibliothecaire = [
-    {url:'/emprunt', title: 'Enregistrer un emprunt'},
-    {url:'/retour', title: 'Enregistrer un retour'},
-    {url:'/abonne', title: 'Gestion des abonnés'},
-    {url:'/commentaire', title: 'Commentaires à traiter'},
-    {url:'/mediatheque', title: 'Gestion de la médiathèque'}
-  ];
 
   menuAbonne = [
     {url:'/rechercheabonne', title: 'Rechercher un abonné'},
@@ -28,6 +20,13 @@ export class BibliothecairePage implements OnInit {
     {url:'/modifierabonne', title: 'Modifier un abonné'},
     {url:'/supprimerabonne', title: 'Supprimer un abonné'},
     {url:'/bibliothecaire', title: 'Retour au menu principal'}
+  ];
+  menuBibliothecaire = [
+    {url:'/emprunt', title: 'Enregistrer un emprunt'},
+    {url:'/retour', title: 'Enregistrer un retour'},
+    {url:'/abonne', title: 'Gestion des abonnés'},
+    {url:'/commentaire', title: 'Commentaires à traiter'},
+    {url:'/mediatheque', title: 'Gestion de la médiathèque'}
   ];
 
   constructor(private bibliothecaireService: BibliothecaireService, private animationCtrl: AnimationController, private router: Router) { }
@@ -40,8 +39,8 @@ export class BibliothecairePage implements OnInit {
         this.Prenom = data.Prenom;
       }
     );
-    this.bibliothecaireService.pages$.next(this.menuBibliothecaire);
     this.bibliothecaireService.seDeconnecte$.next({affiche: true});
+    this.bibliothecaireService.pages$.next(this.menuAbonne);
     this.animerPage();
   }
 
@@ -90,10 +89,10 @@ export class BibliothecairePage implements OnInit {
 
   }
 
-  allerVersLesAbonnes() {
+  revenir() {
     this.bibliothecaireService.seDeconnecte$.next({affiche: true});
-    this.bibliothecaireService.pages$.next(this.menuAbonne);
-    this.router.navigateByUrl('/abonne');
+    this.bibliothecaireService.pages$.next(this.menuBibliothecaire);
+    this.router.navigateByUrl('/bibliothecaire');
   }
 
 }

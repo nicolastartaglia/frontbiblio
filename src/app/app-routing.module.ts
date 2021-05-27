@@ -38,9 +38,42 @@ const routes: Routes = [
   {
     path: 'referent-details/:idReferent',
     loadChildren: () => import('./pages/referent-details/referent-details.module').then( m => m.ReferentDetailsPageModule)
-  },  {
+  },
+  {
     path: 'emprunt',
     loadChildren: () => import('./pages/emprunt/emprunt.module').then( m => m.EmpruntPageModule)
+  },
+  {
+    path: 'retour',
+    loadChildren: () => import('./pages/retour/retour.module').then( m => m.RetourPageModule)
+  },
+  {
+    path: 'abonne',
+    loadChildren: () => import('./pages/abonne/abonne.module').then( m => m.AbonnePageModule)
+  },
+  {
+    path: 'commentaire',
+    loadChildren: () => import('./pages/commentaire/commentaire.module').then( m => m.CommentairePageModule)
+  },
+  {
+    path: 'mediatheque',
+    loadChildren: () => import('./pages/mediatheque/mediatheque.module').then( m => m.MediathequePageModule)
+  },
+  {
+    path: 'rechercheabonne',
+    loadChildren: () => import('./pages/rechercheabonne/rechercheabonne.module').then( m => m.RechercheabonnePageModule)
+  },
+  {
+    path: 'ajouterabonne',
+    loadChildren: () => import('./pages/ajouterabonne/ajouterabonne.module').then( m => m.AjouterabonnePageModule)
+  },
+  {
+    path: 'modifierabonne',
+    loadChildren: () => import('./pages/modifierabonne/modifierabonne.module').then( m => m.ModifierabonnePageModule)
+  },
+  {
+    path: 'supprimerabonne',
+    loadChildren: () => import('./pages/supprimerabonne/supprimerabonne.module').then( m => m.SupprimerabonnePageModule)
   }
 
 
@@ -48,8 +81,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-    // RouterModule.forRoot(routes, { onSameUrlNavigation: 'ignore' })
+    // RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })
   ],
   exports: [RouterModule]
 })

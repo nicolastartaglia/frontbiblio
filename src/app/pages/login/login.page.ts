@@ -14,10 +14,17 @@ export class LoginPage implements OnInit {
   isSubmitted = false;
   seConnecter$: any;
   message = '';
-  // menuReferent = [
-  //   {url:'/rechercher', title: 'Rechercher'},
-  //   {url:'/logout', title: 'Se déconnecter'}
-  // ];
+  menuReferent = [
+    {url:'/rechercher', title: 'Rechercher'}
+  ];
+
+  menuBibliothecaire = [
+    {url:'/emprunt', title: 'Enregistrer un emprunt'},
+    {url:'/retour', title: 'Enregistrer un retour'},
+    {url:'/abonne', title: 'Gestion des abonnés'},
+    {url:'/commentaire', title: 'Commentaires à traiter'},
+    {url:'/mediatheque', title: 'Gestion de la médiathèque'}
+  ];
 
 
   constructor(public formBuilder: FormBuilder,
@@ -27,7 +34,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.connexion = this.formBuilder.group({
-      Email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      Email: ['', [Validators.required, Validators.email]],
       Password: ['', [Validators.required, Validators.minLength(2)]]
     });
     console.log("ngOnInit login page");
@@ -50,10 +57,12 @@ export class LoginPage implements OnInit {
           (data) => {
             if (this.bibliothecaireService.estConnecte()) {
               if (this.bibliothecaireService.estReferent()) {
-                // this.bibliothecaireService.pages$.next(this.menuReferent);
-                // this.bibliothecaireService.seDeconnecte$.next({affiche: true});
+                this.bibliothecaireService.pages$.next(this.menuReferent);
+                this.bibliothecaireService.seDeconnecte$.next({affiche: true});
                 this.router.navigateByUrl('/referent');
               } else {
+                this.bibliothecaireService.pages$.next(this.menuBibliothecaire);
+                this.bibliothecaireService.seDeconnecte$.next({affiche: true});
                 this.router.navigateByUrl('/bibliothecaire');
               }
             } else {
