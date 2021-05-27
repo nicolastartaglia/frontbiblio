@@ -45,9 +45,11 @@
     <ion-row>
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <ion-item>
-          <ion-label position="floating">Referent</ion-label>
-          <ion-input formControlName="Referent" type="text" required>
-          </ion-input>
+          <ion-label position="floating">Référent</ion-label>
+          <ion-select formControlName="Referent" value={{referent}}>
+            <ion-select-option value="true">Oui</ion-select-option>
+            <ion-select-option value="false">Non</ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -55,8 +57,10 @@
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <ion-item>
           <ion-label position="floating">Statut</ion-label>
-          <ion-input formControlName="Statut" type="text" required>
-          </ion-input>
+          <ion-select formControlName="Statut" value={{statut}}>
+            <ion-select-option value="Actif">Actif</ion-select-option>
+            <ion-select-option value="Suspendu">Suspendu</ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>

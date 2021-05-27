@@ -19,6 +19,7 @@ export class ReferentPage implements OnInit {
     {url:'/rechercher', title: 'Rechercher'}
   ];
   addForm: FormGroup;
+  message: '';
 
 
   bibliothecaires: Observable<Array<Bibliothecaire>>;
@@ -36,8 +37,8 @@ export class ReferentPage implements OnInit {
         Prenom: [''],
         Email: ['', [Validators.required, Validators.email]],
         Password: [''],
-        Referent: [''],
-        Statut: ['']
+        Referent: ['false'],
+        Statut: ['Actif']
       });
       this.Nom = this.bibliothecaireService.recupererDonneesJeton().Nom;
       this.Prenom = this.bibliothecaireService.recupererDonneesJeton().Prenom;
@@ -60,10 +61,18 @@ export class ReferentPage implements OnInit {
   }
 
   ajouterBibliothecaire() {
-    this.bibliothecaireService.ajouterUnBibliothecaire(this.addForm.value).subscribe(() => {
-      this.bibliothecaireService.refreshBibliothecaires.next(true);
+    this.bibliothecaireService.ajouterUnBibliothecaire(this.addForm.value).subscribe((data) => {
+      if(data.message) {
+        this.message = data.message;
+      } else {
+        this.bibliothecaireService.refreshBibliothecaires.next(true);
+      }
     });
     this.addForm.reset();
+    this.addForm.patchValue({
+      Referent: 'false',
+      Statut: 'Actif'
+    });
 
   }
 

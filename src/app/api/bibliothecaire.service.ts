@@ -34,7 +34,7 @@ export class BibliothecaireService {
 
   baseUrl = "http://localhost:8082/bibliothecaire/";
   headers = new HttpHeaders().set('Content-Type', 'application/json')
-    .set('Authorization', `Bearer ${this.recupererJeton()}`);
+    .set('x-access-token', `${this.recupererJeton()}`);
 
 
   private jeton: string;
@@ -103,13 +103,15 @@ export class BibliothecaireService {
 
 
   obtenirTousLesBibliothecaires(): Observable<any> {
-    return this.httpClient.get(this.baseUrl, { headers: this.headers })
+    const headers = { headers: this.headers };
+    return this.httpClient.get(this.baseUrl, headers)
       .pipe(
         map((data: any) => {
-          data.sort((a, b) => {
-            return a.Nom.localeCompare(b.Nom);
-          });
-          console.log("nouvelle liste");
+          if(!data.message) {
+            data.sort((a, b) => {
+              return a.Nom.localeCompare(b.Nom);
+            });
+          }
           console.log(data);
           return data;
         }),
@@ -143,7 +145,6 @@ export class BibliothecaireService {
     return this.httpClient.post(this.baseUrl, data, { headers: this.headers })
       .pipe(
         map((res: any) => {
-          console.log(res);
           return res;
         }),
         catchError(this.errorMgmt)

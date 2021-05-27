@@ -14,6 +14,8 @@ export class ReferentDetailsPage implements OnInit {
   editForm: FormGroup;
   unBibliothecaire$: any;
   id: any;
+  statut: '';
+  referent: '';
 
   constructor(
     private bibliothecaireService: BibliothecaireService,
@@ -37,12 +39,13 @@ export class ReferentDetailsPage implements OnInit {
     this.unBibliothecaire$ = this.bibliothecaireService.obtenirUnBibliothecaire(this.id)
       .subscribe(
         data => {
+          this.statut = data.Statut;
+          this.referent = data.Referent;
           this.editForm.patchValue({
             Id: data.Id,
             Nom: data.Nom,
             Prenom: data.Prenom,
             Email: data.Email,
-            Password: data.Password,
             Referent: data.Referent,
             Statut: data.Statut
           });
