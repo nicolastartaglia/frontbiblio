@@ -5,6 +5,7 @@ import { Bibliothecaire } from '../../models/bibliothecaire';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-referent',
@@ -20,6 +21,7 @@ export class ReferentPage implements OnInit {
   ];
   addForm: FormGroup;
   message: '';
+  idBibliothecaire: number;
 
 
   bibliothecaires: Observable<Array<Bibliothecaire>>;
@@ -28,6 +30,8 @@ export class ReferentPage implements OnInit {
 
   ngOnInit() {
     if (this.bibliothecaireService.estConnecte()) {
+      console.log("headers");
+      console.log(this.bibliothecaireService.headers);
       if (!this.bibliothecaireService.estReferent()) {
         this.router.navigateByUrl('');
       }
@@ -40,16 +44,18 @@ export class ReferentPage implements OnInit {
         Referent: ['false'],
         Statut: ['Actif']
       });
-      this.Nom = this.bibliothecaireService.recupererDonneesJeton().Nom;
-      this.Prenom = this.bibliothecaireService.recupererDonneesJeton().Prenom;
+      this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
+      this.bibliothecaireService.obtenirUnBibliothecaire(this.idBibliothecaire).subscribe(
+        (data) => {
+          this.Nom = data.Nom;
+          this.Prenom = data.Prenom;
+      });
       this.bibliothecaireService.pages$.next(this.menuReferent);
       this.bibliothecaireService.seDeconnecte$.next({affiche: true});
       this.bibliothecaires = this.bibliothecaireService.refreshBibliothecaires.pipe(switchMap(_ => this.bibliothecaireService.obtenirTousLesBibliothecaires()));
     } else {
       this.router.navigateByUrl('');
     }
-    console.log("ngOnInit référent page");
-
   }
 
   supprimerBibliothecaire(id) {

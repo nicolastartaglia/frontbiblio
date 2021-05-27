@@ -33,9 +33,8 @@ export class BibliothecaireService {
   refreshBibliothecaires = new BehaviorSubject<boolean>(true);
 
   baseUrl = "http://localhost:8082/bibliothecaire/";
-  headers = new HttpHeaders().set('Content-Type', 'application/json')
-    .set('x-access-token', `${this.recupererJeton()}`);
 
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   private jeton: string;
 
@@ -53,6 +52,10 @@ export class BibliothecaireService {
     return this.jeton;
   }
 
+  mettreAJourLesEntetes(jeton: string) {
+    this.headers = new HttpHeaders().set('Content-Type', 'application/json')
+                                    .set('x-access-token', jeton);
+  }
 
   seConnecter(bibliothecaire: Connexion): Observable<any> {
     return this.httpClient.post(this.baseUrl + "connexion", bibliothecaire)
@@ -60,6 +63,7 @@ export class BibliothecaireService {
         map((data: any) => {
           if (data.accessToken) {
             this.enregistrerJeton(data.accessToken);
+            this.mettreAJourLesEntetes(data.accessToken);
           }
           return data;
         }),
@@ -103,8 +107,8 @@ export class BibliothecaireService {
 
 
   obtenirTousLesBibliothecaires(): Observable<any> {
-    const headers = { headers: this.headers };
-    return this.httpClient.get(this.baseUrl, headers)
+    console.log(this.headers );
+    return this.httpClient.get(this.baseUrl, { headers: this.headers })
       .pipe(
         map((data: any) => {
           if(!data.message) {

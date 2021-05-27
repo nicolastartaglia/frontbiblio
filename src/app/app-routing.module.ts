@@ -38,7 +38,11 @@ const routes: Routes = [
   {
     path: 'referent-details/:idReferent',
     loadChildren: () => import('./pages/referent-details/referent-details.module').then( m => m.ReferentDetailsPageModule)
+  },  {
+    path: 'emprunt',
+    loadChildren: () => import('./pages/emprunt/emprunt.module').then( m => m.EmpruntPageModule)
   }
+
 
 ];
 
