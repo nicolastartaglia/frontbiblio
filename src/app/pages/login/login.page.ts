@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { BibliothecaireService } from '../../api/bibliothecaire.service';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,8 @@ export class LoginPage implements OnInit {
 
   constructor(public formBuilder: FormBuilder,
               private bibliothecaireService: BibliothecaireService,
-              private router: Router) { }
+              private router: Router,
+              private menuCtrl: MenuController) { }
 
 
   ngOnInit() {
@@ -50,8 +52,6 @@ export class LoginPage implements OnInit {
       console.log('Tous les champs sont requis')
       return false;
     } else {
-      console.log(this.connexion.value);
-
       this.seConnecter$ = this.bibliothecaireService.seConnecter(this.connexion.value)
         .subscribe(
           (data) => {
@@ -63,6 +63,7 @@ export class LoginPage implements OnInit {
               } else {
                 this.bibliothecaireService.pages$.next(this.menuBibliothecaire);
                 this.bibliothecaireService.seDeconnecte$.next({affiche: true});
+                this.menuCtrl.close();
                 this.router.navigateByUrl('/bibliothecaire');
               }
             } else {

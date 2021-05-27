@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BibliothecaireService } from '../../api/bibliothecaire.service';
-import { Animation, AnimationController } from '@ionic/angular';
+import { Animation, AnimationController, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,7 +29,10 @@ export class AbonnePage implements OnInit {
     {url:'/mediatheque', title: 'Gestion de la médiathèque'}
   ];
 
-  constructor(private bibliothecaireService: BibliothecaireService, private animationCtrl: AnimationController, private router: Router) { }
+  constructor(private bibliothecaireService: BibliothecaireService, 
+              private animationCtrl: AnimationController,
+              private router: Router,
+              private menuCtrl: MenuController) { }
 
   ngOnInit() {
     this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
@@ -92,6 +95,7 @@ export class AbonnePage implements OnInit {
   revenir() {
     this.bibliothecaireService.seDeconnecte$.next({affiche: true});
     this.bibliothecaireService.pages$.next(this.menuBibliothecaire);
+    this.menuCtrl.close();
     this.router.navigateByUrl('/bibliothecaire');
   }
 
