@@ -12,17 +12,46 @@ import { BibliothecaireService } from './bibliothecaire.service';
 })
 export class AbonneService {
 
-  baseUrl = "http://localhost:8082/abonne/";
+  baseUrl = "http://192.168.200.176:8082/abonne/";
 
   constructor(private httpClient: HttpClient, private router: Router, private bibliothecaireService: BibliothecaireService) { }
 
   ajouterUnAbonne(data: Abonne): Observable<any> {
-    console.log(data);
-    console.log(this.bibliothecaireService.headers);
     return this.httpClient.post(this.baseUrl, data, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
           return data.id;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  mettreAjourUnAbonne(id: number, data: Abonne): Observable<any> {
+    return this.httpClient.put(this.baseUrl + id, data, { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((res: any) => {
+          console.log(res);
+          return res;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  supprimerUnAbonne(id: number): Observable<any> {
+    return this.httpClient.delete(this.baseUrl+id, { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          return data.message;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  obtenirUnAbonne(id: string ): Observable<any> {
+    return this.httpClient.get(this.baseUrl+id, { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          return data;
         }),
         catchError(this.errorMgmt)
       );

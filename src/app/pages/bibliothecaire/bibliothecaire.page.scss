@@ -29,17 +29,17 @@
 
 }
 
-#it1 {
+#option1 {
   border-radius: 10px 10px 0 0;
   border-top: solid 1px;
 }
 
-#it1, #it2, #it3, #it4 {
+#option1, #option2, #option3, #option4, #option5 {
   border-right: solid 1px;
   border-left: solid 1px;
 }
 
-#it5 {
+#option5 {
   border-radius: 0 0 10px 10px;
   border-bottom: solid 1px;
 }
@@ -70,6 +70,7 @@
 
 .titre {
   padding: 5px;
+  font-family: 'Permanent Marker', cursive;
 }
 
 .book {

@@ -12,42 +12,41 @@
 <ion-content>
   <div class="book">
   <ion-grid>
-    <ion-row [routerLink]="['/rechercheabonne']">
-      <ion-col  size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <div id="it1" class="item">
+    <ion-row id="it1">
+      <ion-col  size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" [routerLink]="['/rechercheabonne']">
+        <div id="option1" class="item">
           <div class="contenu">Rechercher</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row [routerLink]="['/ajouterabonne']">
-      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <div id="it2" class="item">
+    <ion-row id="it2">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" [routerLink]="['/ajouterabonne']">
+        <div id="option2" class="item">
           <div class="contenu">Ajouter</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row [routerLink]="['/modifierabonne']">
-      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <div id="it3" class="item">
+    <ion-row id="it3">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" [routerLink]="['/modifierabonne']">
+        <div id="option3" class="item">
           <div class="contenu">Modifier</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row [routerLink]="['/supprimerabonne']">
-      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <div id="it4" class="item">
+    <ion-row id="it4">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" [routerLink]="['/supprimerabonne']">
+        <div id="option4" class="item">
           <div class="contenu">Supprimer</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row (click)="revenir()">
-      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <div id="it5" class="item">
+    <ion-row id="it5">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" (click)="revenir()">
+        <div id="option5" class="item">
           <div class="contenu">Terminer</div>
         </div>
       </ion-col>
     </ion-row>
-
   </ion-grid>
 </div>
 </ion-content>

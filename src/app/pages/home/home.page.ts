@@ -9,7 +9,8 @@ import { BibliothecaireService } from '../../api/bibliothecaire.service';
 })
 export class HomePage implements OnInit {
 
-  constructor(private animationCtrl: AnimationController, private bibliothecaireService: BibliothecaireService) {}
+  constructor(private animationCtrl: AnimationController,
+              private bibliothecaireService: BibliothecaireService) {}
 
   ngOnInit() {
     this.animerPage();

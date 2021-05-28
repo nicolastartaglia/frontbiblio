@@ -14,6 +14,7 @@ export class BibliothecairePage implements OnInit {
   Prenom = '';
   idBibliothecaire: number;
 
+
   menuBibliothecaire = [
     {url:'/emprunt', title: 'Enregistrer un emprunt'},
     {url:'/retour', title: 'Enregistrer un retour'},
@@ -33,6 +34,12 @@ export class BibliothecairePage implements OnInit {
   constructor(private bibliothecaireService: BibliothecaireService, private animationCtrl: AnimationController, private router: Router) { }
 
   ngOnInit() {
+    // if (BibliothecairePage.iteration === 0) {
+    //   BibliothecairePage.iteration = BibliothecairePage.iteration + 1;
+    //   console.log(BibliothecairePage.iteration);
+    //   window.location.reload();
+    // }
+
     this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
     this.bibliothecaireService.obtenirUnBibliothecaire(this.idBibliothecaire).subscribe(
       (data) => {
@@ -42,7 +49,7 @@ export class BibliothecairePage implements OnInit {
     );
     this.bibliothecaireService.pages$.next(this.menuBibliothecaire);
     this.bibliothecaireService.seDeconnecte$.next({affiche: true});
-    this.animerPage();
+  //  this.animerPage();
   }
 
   animerPage() {
@@ -87,6 +94,7 @@ export class BibliothecairePage implements OnInit {
     animation3.play();
     animation4.play();
     animation5.play();
+
 
   }
 

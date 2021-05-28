@@ -32,7 +32,7 @@ export class BibliothecaireService {
 
   refreshBibliothecaires = new BehaviorSubject<boolean>(true);
 
-  baseUrl = "http://localhost:8082/bibliothecaire/";
+  baseUrl = "http://192.168.200.176:8082/bibliothecaire/";
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 

@@ -12,37 +12,37 @@
 <ion-content>
   <div class="book">
   <ion-grid>
-    <ion-row [routerLink]="['/emprunt']">
-      <ion-col  size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <div id="it1" class="item">
+    <ion-row id="it1" [routerLink]="['/emprunt']">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <div id="option1" class="item">
           <div class="contenu">Emprunts</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row [routerLink]="['/retour']">
+    <ion-row id="it2" [routerLink]="['/retour']">
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <div id="it2" class="item">
+        <div id="option2" class="item">
           <div class="contenu">Retours</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row (click)="allerVersLesAbonnes()">
+    <ion-row id="it3" (click)="allerVersLesAbonnes()">
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <div id="it3" class="item">
+        <div id="option3" class="item">
           <div class="contenu">Abonnés</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row [routerLink]="['/commentaire']">
+    <ion-row id="it4" [routerLink]="['/commentaire']">
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <div id="it4" class="item">
+        <div id="option4" class="item">
           <div class="contenu">Commentaires</div>
         </div>
       </ion-col>
     </ion-row>
-    <ion-row [routerLink]="['/mediatheque']">
+    <ion-row id="it5" [routerLink]="['/mediatheque']">
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <div id="it5" class="item">
+        <div  id="option5" class="item">
           <div class="contenu">Médiathèque</div>
         </div>
       </ion-col>

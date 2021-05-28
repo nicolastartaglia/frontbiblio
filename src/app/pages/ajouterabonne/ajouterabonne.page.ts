@@ -15,14 +15,23 @@ export class AjouterabonnePage implements OnInit {
   Nom = '';
   Prenom = '';
   message = '';
+  messageInfo = '';
+  idBibliothecaire: number;
+
 
   constructor(private formBuilder: FormBuilder, private bibliothecaireService: BibliothecaireService, private abonneService: AbonneService) { }
 
   ngOnInit() {
+    this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
+    this.bibliothecaireService.obtenirUnBibliothecaire(this.idBibliothecaire).subscribe(
+      (data) => {
+        this.Nom = data.Nom;
+        this.Prenom = data.Prenom;
+      }
+    );
     const dateJour = new Date();
     const dateLimite = new Date(dateJour.setDate(dateJour.getDate() + 365));
     this.dateLimiteFormatee = dateLimite.toLocaleDateString();
-
     const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
     const datedb = this.dateLimiteFormatee.replace(pattern, '$3-$2-$1');
     const idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);

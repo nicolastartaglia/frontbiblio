@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
     sessionStorage.removeItem('biblio');
     this.bibliothecaireService.seDeconnecte$.next({ affiche: false });
     this.bibliothecaireService.pages$.next(this.menuHome);
-    this.router.navigateByUrl('');
+    window.location.replace("http://192.168.200.176:4200/home");
   }
 
 }
