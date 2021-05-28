@@ -14,7 +14,27 @@ export class AbonneService {
 
   baseUrl = "http://192.168.200.176:8082/abonne/";
 
+  refreshAbonnes = new BehaviorSubject<boolean>(true);
+
   constructor(private httpClient: HttpClient, private router: Router, private bibliothecaireService: BibliothecaireService) { }
+
+
+  obtenirQuelquesAbonnes(data: any): Observable<any> {
+    return this.httpClient.post(this.baseUrl+'recherche', data, { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          // if(!data.message) {
+          //   data.sort((a, b) => {
+          //     return a.Nom.localeCompare(b.Nom);
+          //   });
+          // }
+          // console.log(data);
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
 
   ajouterUnAbonne(data: Abonne): Observable<any> {
     return this.httpClient.post(this.baseUrl, data, { headers: this.bibliothecaireService.headers })

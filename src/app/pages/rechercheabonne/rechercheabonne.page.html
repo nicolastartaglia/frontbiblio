@@ -1,9 +1,78 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>rechercheabonne</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="titre"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span class="titre">Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+  <ion-grid>
+    <form [formGroup]="rechercheForm" (ngSubmit)="rechercheAbonne()">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Nom</ion-label>
+            <ion-input formControlName="Nom" type="text" #Nom></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Prénom</ion-label>
+            <ion-input formControlName="Prenom" type="text" #Prenom></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input formControlName="Email" type="text" #Email></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button type="submit" color="primary" shape="full" expand="block" [disabled]="(Nom.value === '' && Prenom.value === '' && Email.value === '') || rechercheForm.invalid">
+                Rechercher
+              </ion-button>
+            </ion-col>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button color="danger" shape="full" expand="block" [routerLink]="['/abonne']">
+                Retour
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ng-container *ngFor="let abonne of abonnes | async">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>
+              <h5>{{abonne.Nom}}</h5>
+              <p>{{abonne.Prenom}}</p>
+              <p>{{abonne.id}}</p>
+            </ion-label>
+            <div class="item-note" item-end>
+              <ion-icon name="create" style="zoom:2.0" [routerLink]="['/abonne-details/', abonne.id]">
+              </ion-icon>
+              <ion-icon name="trash" style="zoom:2.0" (click)="supprimerAbonne(abonne.id)"></ion-icon>
+            </div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ng-container>
 
+  </ion-grid>
 </ion-content>
+
+

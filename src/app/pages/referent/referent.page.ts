@@ -5,7 +5,6 @@ import { Bibliothecaire } from '../../models/bibliothecaire';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-referent',
@@ -22,7 +21,6 @@ export class ReferentPage implements OnInit {
   addForm: FormGroup;
   message: '';
   idBibliothecaire: number;
-
 
   bibliothecaires: Observable<Array<Bibliothecaire>>;
 

@@ -16,10 +16,12 @@ export class ModifierabonnePage implements OnInit {
   idForm: FormGroup;
   Nom = '';
   Prenom = '';
-  messageAlerte = '';
+  messageAlerte1 = '';
+  messageAlerte2 = '';
   messageInfo = '';
   idBibliothecaire: number;
   abonne = new Abonne(0, '', '', '', '', '', '', '', 0, 0, 0, 0);
+  idValide = false;
 
   constructor(private formBuilder: FormBuilder, private bibliothecaireService: BibliothecaireService, private abonneService: AbonneService) { }
 
@@ -52,10 +54,11 @@ export class ModifierabonnePage implements OnInit {
   }
 
   afficheAbonne() {
-    this.messageAlerte = '';
+    this.messageAlerte1 = '';
     this.messageInfo = '';
     this.abonneService.obtenirUnAbonne(this.idForm.value.id).subscribe((data) => {
       if (!data.message) {
+        this.idValide = true;
         this.abonne = data;
         const pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
         const dateAffichee = this.abonne.DateLimiteAbonnement.substring(0, 10).replace(pattern, '$3-$2-$1');
@@ -74,7 +77,8 @@ export class ModifierabonnePage implements OnInit {
           MisAJourPar: this.abonne.MisAJourPar
         });
       } else {
-        this.messageAlerte = data.message;
+        this.idValide = false;
+        this.messageAlerte1 = data.message;
       }
     });
     this.idForm.patchValue({
@@ -91,9 +95,10 @@ export class ModifierabonnePage implements OnInit {
     const dateJour = new Date();
     const dateSaisie = new Date(dateDb);
     if (dateSaisie < dateJour) {
-      this.messageAlerte = "La date saisie ne peut être antérieure à la date d'aujourd'hui";
+      this.messageAlerte2 = "La date saisie ne peut être antérieure à la date d'aujourd'hui";
     } else {
-      this.messageAlerte = '';
+      this.messageAlerte2 = '';
+      this.idValide = false;
       this.abonneService.mettreAjourUnAbonne(this.abonne.id, this.modifForm.value).subscribe(() => {
         this.messageInfo = "Les modifications sur cet abonné ont été enregistrées";
         this.modifForm.patchValue({

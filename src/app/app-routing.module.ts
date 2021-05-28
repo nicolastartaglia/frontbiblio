@@ -74,7 +74,11 @@ const routes: Routes = [
   {
     path: 'supprimerabonne',
     loadChildren: () => import('./pages/supprimerabonne/supprimerabonne.module').then( m => m.SupprimerabonnePageModule)
+  },  {
+    path: 'abonne-details',
+    loadChildren: () => import('./pages/abonne-details/abonne-details.module').then( m => m.AbonneDetailsPageModule)
   }
+
 
 
 ];

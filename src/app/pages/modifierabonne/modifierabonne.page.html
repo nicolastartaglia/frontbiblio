@@ -22,13 +22,29 @@
       </ion-row>
       <ion-row>
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-          <ion-button type="submit" color="primary" shape="full" expand="block" [disabled]="idForm.invalid">
-            Afficher
-          </ion-button>
+          <ion-row>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button type="submit" color="primary" shape="full" expand="block" [disabled]="idForm.invalid">
+                Afficher
+              </ion-button>
+            </ion-col>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button color="danger" shape="full" expand="block" [routerLink]="['/abonne']">
+                Retour
+              </ion-button>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
     </form>
-    <form [formGroup]="modifForm" (ngSubmit)="modifierAbonne()">
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageAlerte">
+          {{ messageAlerte1 }}
+        </span>
+      </ion-col>
+    </ion-row>
+    <form [formGroup]="modifForm" (ngSubmit)="modifierAbonne()" *ngIf="idValide">
     <ion-row>
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <ion-item>
@@ -81,7 +97,7 @@
     <ion-row>
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <ion-item>
-          <ion-label position="floating">Date limite de validité enregistrée: {{ abonne.DateLimiteAbonnement }}</ion-label>
+          <ion-label position="floating">Date limite de validité</ion-label>
           <ion-input formControlName="DateLimiteAbonnement" type="date" required>
           </ion-input>
         </ion-item>
@@ -124,10 +140,10 @@
     </form>
     <ion-row>
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <span id="messageAlerte">
-          {{ messageAlerte }}
+        <span class="messageAlerte">
+          {{ messageAlerte2 }}
         </span>
-        <span id="messageInfo">
+        <span class="messageInfo">
           {{ messageInfo }}
         </span>
       </ion-col>

@@ -17,13 +17,23 @@ export class SupprimerabonnePage implements OnInit {
   messageInfo = '';
   abonne = new Abonne(0, '', '', '', '', '', '', '', 0, 0, 0, 0);
   suppressionImpossible = true;
+  idBibliothecaire: number;
 
   constructor(private formBuilder: FormBuilder, private bibliothecaireService: BibliothecaireService, private abonneService: AbonneService) { }
 
   ngOnInit() {
+    this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
+    this.bibliothecaireService.obtenirUnBibliothecaire(this.idBibliothecaire).subscribe(
+      (data) => {
+        this.Nom = data.Nom;
+        this.Prenom = data.Prenom;
+      }
+    );
     this.suppForm = this.formBuilder.group({
       id: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     });
+    this.messageInfo = '';
+    this.messageAlerte = '';
   }
 
   afficheAbonne() {
@@ -31,8 +41,10 @@ export class SupprimerabonnePage implements OnInit {
       this.abonneService.obtenirUnAbonne(this.suppForm.value.id).subscribe((data) => {
         if (!data.message){
           this.abonne = data;
+          this.messageAlerte = '';
           this.suppressionImpossible = false;
         } else {
+          this.messageInfo = '';
           this.messageAlerte = data.message;
         }
       });
@@ -57,5 +69,6 @@ export class SupprimerabonnePage implements OnInit {
     }
 
   }
+
 
 }
