@@ -47,8 +47,8 @@ export class ModifierabonnePage implements OnInit {
       DateLimiteAbonnement: [''],
       Amende: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       PenaliteNbJours: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      CreePar: ['1', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      MisAJourPar: ['1', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
+      CreePar: ['1'],
+      MisAJourPar: [this.idBibliothecaire]
     });
 
   }

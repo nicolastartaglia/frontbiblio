@@ -27,6 +27,7 @@ export class ReferentPage implements OnInit {
   constructor(private bibliothecaireService: BibliothecaireService, private router: Router, private formBuilder: FormBuilder ) { }
 
   ngOnInit() {
+    console.log("ngOninit referent");
     if (this.bibliothecaireService.estConnecte()) {
       console.log("headers");
       console.log(this.bibliothecaireService.headers);
@@ -58,10 +59,13 @@ export class ReferentPage implements OnInit {
 
   supprimerBibliothecaire(id) {
       this.bibliothecaireService.supprimerUnBibliothecaire(id).subscribe(
-        () => {},
+        () => {  },
         (err) => console.log(err),
-        () => { console.log("terminé");  this.bibliothecaireService.refreshBibliothecaires.next(true);  }
+        () => { setTimeout(() => {this.bibliothecaireService.refreshBibliothecaires.next(true)}, 100);  }
       );
+
+
+
   }
 
   ajouterBibliothecaire() {

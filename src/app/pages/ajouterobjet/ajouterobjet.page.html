@@ -1,0 +1,216 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="titre"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span class="titre">Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <form [formGroup]="addForm" (ngSubmit)="ajouterObjet()">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-list>
+            <ion-radio-group formControlName="TypeObjet" value="ecrit" #typeobjet>
+              <ion-list-header>
+                <ion-label>Type d'objet</ion-label>
+              </ion-list-header>
+              <ion-item>
+                <ion-label>Écrit</ion-label>
+                <ion-radio slot="start" value="ecrit" checked="ecrit"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>Audio</ion-label>
+                <ion-radio slot="start" value="audio"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>Vidéo</ion-label>
+                <ion-radio slot="start" value="video"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="typeobjet.value != 'ecrit'">
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <p>COUCOU</p>
+
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Titre</ion-label>
+            <ion-input formControlName="Titre" type="text" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Auteur/Scénariste/Compositeur</ion-label>
+            <ion-input formControlName="AuteurScenariste" type="text" required>
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Réalisateur</ion-label>
+            <ion-input formControlName="Realisateur" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Scénariste</ion-label>
+            <ion-input formControlName="Scenariste" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Genre</ion-label>
+            <ion-input formControlName="Genre" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Année</ion-label>
+            <ion-input formControlName="Annee" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Durée</ion-label>
+            <ion-input formControlName="Duree" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-input formControlName="Description" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Édition</ion-label>
+            <ion-input formControlName="Edition" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Pages</ion-label>
+            <ion-input formControlName="Pages" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Dessinateur</ion-label>
+            <ion-input formControlName="Dessinateur" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Artiste(s)</ion-label>
+            <ion-input formControlName="Artiste" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Zone</ion-label>
+            <ion-input formControlName="Zone" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Travée</ion-label>
+            <ion-input formControlName="Travee" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Étagère / Bac</ion-label>
+            <ion-input formControlName="EtagereBac" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Code titre/auteur</ion-label>
+            <ion-input formControlName="Code3C" type="text">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button type="submit" color="primary" shape="full" expand="block"  [disabled]="addForm.invalid">
+                Ajouter
+              </ion-button>
+            </ion-col>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button color="danger" shape="full" expand="block" [routerLink]="['/objet']">
+                Retour
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span id="message">
+          {{ message }}
+        </span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

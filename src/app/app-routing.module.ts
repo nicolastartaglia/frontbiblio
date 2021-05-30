@@ -64,6 +64,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/rechercheabonne/rechercheabonne.module').then( m => m.RechercheabonnePageModule)
   },
   {
+    path: 'rechercheabonne/:idAbonne',
+    loadChildren: () => import('./pages/rechercheabonne/rechercheabonne.module').then( m => m.RechercheabonnePageModule)
+  },
+  {
     path: 'ajouterabonne',
     loadChildren: () => import('./pages/ajouterabonne/ajouterabonne.module').then( m => m.AjouterabonnePageModule)
   },
@@ -74,10 +78,35 @@ const routes: Routes = [
   {
     path: 'supprimerabonne',
     loadChildren: () => import('./pages/supprimerabonne/supprimerabonne.module').then( m => m.SupprimerabonnePageModule)
-  },  {
-    path: 'abonne-details',
+  },
+  {
+    path: 'abonne-details/:idAbonne',
     loadChildren: () => import('./pages/abonne-details/abonne-details.module').then( m => m.AbonneDetailsPageModule)
+  },  {
+    path: 'rechercheobjet',
+    loadChildren: () => import('./pages/rechercheobjet/rechercheobjet.module').then( m => m.RechercheobjetPageModule)
+  },
+  {
+    path: 'ajouterobjet',
+    loadChildren: () => import('./pages/ajouterobjet/ajouterobjet.module').then( m => m.AjouterobjetPageModule)
+  },
+  {
+    path: 'modifierobjet',
+    loadChildren: () => import('./pages/modifierobjet/modifierobjet.module').then( m => m.ModifierobjetPageModule)
+  },
+  {
+    path: 'supprimerobjet',
+    loadChildren: () => import('./pages/supprimerobjet/supprimerobjet.module').then( m => m.SupprimerobjetPageModule)
+  },
+  {
+    path: 'objetperdu',
+    loadChildren: () => import('./pages/objetperdu/objetperdu.module').then( m => m.ObjetperduPageModule)
+  },
+  {
+    path: 'objetabime',
+    loadChildren: () => import('./pages/objetabime/objetabime.module').then( m => m.ObjetabimePageModule)
   }
+
 
 
 

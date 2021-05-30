@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AbonneDetailsPageRoutingModule } from './abonne-details-routing.module';
+import { AjouterobjetPageRoutingModule } from './ajouterobjet-routing.module';
 
-import { AbonneDetailsPage } from './abonne-details.page';
+import { AjouterobjetPage } from './ajouterobjet.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AbonneDetailsPageRoutingModule,
+    AjouterobjetPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [AbonneDetailsPage]
+  declarations: [AjouterobjetPage]
 })
-export class AbonneDetailsPageModule {}
+export class AjouterobjetPageModule {}

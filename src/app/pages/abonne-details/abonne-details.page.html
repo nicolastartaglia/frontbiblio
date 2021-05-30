@@ -1,9 +1,122 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>abonne-details</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="titre"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span class="titre">Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+  <ion-grid>
 
+
+    <form [formGroup]="modifForm" (ngSubmit)="modifierAbonne()">
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Nom</ion-label>
+          <ion-input formControlName="Nom" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Prénom</ion-label>
+          <ion-input formControlName="Prenom" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input formControlName="Email" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Rue</ion-label>
+          <ion-input formControlName="Rue" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Code Postal</ion-label>
+          <ion-input formControlName="CodePostal" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Ville</ion-label>
+          <ion-input formControlName="Ville" type="text" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Date limite de validité</ion-label>
+          <ion-input formControlName="DateLimiteAbonnement" type="date" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Amende</ion-label>
+          <ion-input formControlName="Amende" type="text" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Pénalité de retard en jour</ion-label>
+          <ion-input formControlName="PenaliteNbJours" type="text" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-row>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button type="submit" color="primary" shape="full" expand="block" [disabled]="modifForm.invalid">
+              Valider
+            </ion-button>
+          </ion-col>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button color="danger" shape="full" expand="block" [routerLink]="['/rechercheabonne']">
+              Retour
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    </form>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageAlerte">
+          {{ messageAlerte }}
+        </span>
+        <span class="messageInfo">
+          {{ messageInfo }}
+        </span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Bibliothecaire } from '../models/bibliothecaire';
 import { Connexion } from '../models/connexion';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -38,7 +37,7 @@ export class BibliothecaireService {
 
   private jeton: string;
 
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient) { }
 
   private enregistrerJeton(jeton: string) {
     sessionStorage.setItem('biblio', jeton);
