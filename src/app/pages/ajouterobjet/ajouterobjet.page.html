@@ -15,13 +15,13 @@
       <ion-row>
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-list>
-            <ion-radio-group formControlName="TypeObjet" value="ecrit" #typeobjet>
+            <ion-radio-group formControlName="TypeObjet" #typeobjet>
               <ion-list-header>
                 <ion-label>Type d'objet</ion-label>
               </ion-list-header>
               <ion-item>
                 <ion-label>Écrit</ion-label>
-                <ion-radio slot="start" value="ecrit" checked="ecrit"></ion-radio>
+                <ion-radio slot="start" value="ecrit"></ion-radio>
               </ion-item>
               <ion-item>
                 <ion-label>Audio</ion-label>
@@ -35,33 +35,24 @@
           </ion-list>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="typeobjet.value != 'ecrit'">
-        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-          <ion-item>
-            <p>COUCOU</p>
-
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
       <ion-row>
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-item>
             <ion-label position="floating">Titre</ion-label>
-            <ion-input formControlName="Titre" type="text" required></ion-input>
+            <ion-input formControlName="Titre" type="text" #titre required></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="typeobjet.value == 'ecrit'">
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-item>
-            <ion-label position="floating">Auteur/Scénariste/Compositeur</ion-label>
-            <ion-input formControlName="AuteurScenariste" type="text" required>
+            <ion-label position="floating">Auteur</ion-label>
+            <ion-input formControlName="AuteurScenariste" type="text">
             </ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="typeobjet.value == 'video'">
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-item>
             <ion-label position="floating">Réalisateur</ion-label>
@@ -70,7 +61,7 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="typeobjet.value == 'video'">
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-item>
             <ion-label position="floating">Scénariste</ion-label>
@@ -82,9 +73,46 @@
       <ion-row>
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-item>
-            <ion-label position="floating">Genre</ion-label>
-            <ion-input formControlName="Genre" type="text">
-            </ion-input>
+              <ion-label position="floating">Genre</ion-label>
+              <ion-select formControlName="Genre" value="">
+                <ion-select-option value="sciencefiction" *ngIf="typeobjet.value == 'video'">Science fiction</ion-select-option>
+                <ion-select-option value="policier" *ngIf="typeobjet.value == 'video'">Policier</ion-select-option>
+                <ion-select-option value="avventures" *ngIf="typeobjet.value == 'video'">Aventures</ion-select-option>
+                <ion-select-option value="historique" *ngIf="typeobjet.value == 'video'">Historique</ion-select-option>
+                <ion-select-option value="biographies" *ngIf="typeobjet.value == 'video'">Biographies</ion-select-option>
+                <ion-select-option value="thriller" *ngIf="typeobjet.value == 'video'">Thriller</ion-select-option>
+                <ion-select-option value="drame" *ngIf="typeobjet.value == 'video'">Drame</ion-select-option>
+                <ion-select-option value="action" *ngIf="typeobjet.value == 'video'">Action</ion-select-option>
+                <ion-select-option value="fantastiqque" *ngIf="typeobjet.value == 'video'">Fantastique</ion-select-option>
+                <ion-select-option value="horreur" *ngIf="typeobjet.value == 'video'">Horreur/Épouvante</ion-select-option>
+                <ion-select-option value="comedie" *ngIf="typeobjet.value == 'video'">Comédie</ion-select-option>
+                <ion-select-option value="theatre" *ngIf="typeobjet.value == 'video'">Théâtre</ion-select-option>
+
+                <ion-select-option value="nouvelles" *ngIf="typeobjet.value == 'ecrit'">Nouvelles</ion-select-option>
+                <ion-select-option value="epopees" *ngIf="typeobjet.value == 'ecrit'">Épopées</ion-select-option>
+                <ion-select-option value="contes" *ngIf="typeobjet.value == 'ecrit'">Contes</ion-select-option>
+                <ion-select-option value="poesie" *ngIf="typeobjet.value == 'ecrit'">Poésie</ion-select-option>
+                <ion-select-option value="memoires" *ngIf="typeobjet.value == 'ecrit'">Mémoires</ion-select-option>
+                <ion-select-option value="roman" *ngIf="typeobjet.value == 'ecrit'">Roman</ion-select-option>
+                <ion-select-option value="bd" *ngIf="typeobjet.value == 'ecrit'">Bande dessinée</ion-select-option>
+                <ion-select-option value="dico" *ngIf="typeobjet.value == 'ecrit'">Dictionnaire</ion-select-option>
+
+                <ion-select-option value="rock" *ngIf="typeobjet.value == 'audio'">Rock</ion-select-option>
+                <ion-select-option value="pop" *ngIf="typeobjet.value == 'audio'">Pop</ion-select-option>
+                <ion-select-option value="jazz" *ngIf="typeobjet.value == 'audio'">Jazz</ion-select-option>
+                <ion-select-option value="soul" *ngIf="typeobjet.value == 'audio'">Soul</ion-select-option>
+                <ion-select-option value="rap" *ngIf="typeobjet.value == 'audio'">Rap</ion-select-option>
+                <ion-select-option value="folk" *ngIf="typeobjet.value == 'audio'">Folk</ion-select-option>
+                <ion-select-option value="metal" *ngIf="typeobjet.value == 'audio'">Métal</ion-select-option>
+                <ion-select-option value="blues" *ngIf="typeobjet.value == 'audio'">Blues</ion-select-option>
+                <ion-select-option value="opera" *ngIf="typeobjet.value == 'audio'">Opéra</ion-select-option>
+                <ion-select-option value="classique" *ngIf="typeobjet.value == 'audio'">Classique</ion-select-option>
+                <ion-select-option value="reggae" *ngIf="typeobjet.value == 'audio'">Reggae</ion-select-option>
+                <ion-select-option value="disco" *ngIf="typeobjet.value == 'audio'">Disco</ion-select-option>
+                <ion-select-option value="country" *ngIf="typeobjet.value == 'audio'">Country</ion-select-option>
+                <ion-select-option value="country" *ngIf="typeobjet.value == 'audio'">Country</ion-select-option>
+                <ion-select-option value="rumba" *ngIf="typeobjet.value == 'audio'">Rumba</ion-select-option>
+              </ion-select>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -97,10 +125,10 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="typeobjet.value !== 'ecrit'">
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-item>
-            <ion-label position="floating">Durée</ion-label>
+            <ion-label position="floating">Durée (en minutes)</ion-label>
             <ion-input formControlName="Duree" type="text">
             </ion-input>
           </ion-item>
@@ -110,8 +138,7 @@
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-item>
             <ion-label position="floating">Description</ion-label>
-            <ion-input formControlName="Description" type="text">
-            </ion-input>
+            <ion-textarea rows="6" formControlName="Description"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -124,7 +151,7 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="typeobjet.value == 'ecrit'">
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-item>
             <ion-label position="floating">Pages</ion-label>
@@ -133,7 +160,7 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="typeobjet.value == 'ecrit'">
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-item>
             <ion-label position="floating">Dessinateur</ion-label>
@@ -142,10 +169,10 @@
           </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="typeobjet.value == 'audio'">
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-item>
-            <ion-label position="floating">Artiste(s)</ion-label>
+            <ion-label position="floating">Artiste/Compositeur/Interprète</ion-label>
             <ion-input formControlName="Artiste" type="text">
             </ion-input>
           </ion-item>
@@ -191,12 +218,12 @@
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
           <ion-row>
             <ion-col size-sm="5" offset-sm="1">
-              <ion-button type="submit" color="primary" shape="full" expand="block"  [disabled]="addForm.invalid">
+              <ion-button type="submit" color="danger" shape="full" expand="block"  [disabled]="titre.value === ''">
                 Ajouter
               </ion-button>
             </ion-col>
             <ion-col size-sm="5" offset-sm="1">
-              <ion-button color="danger" shape="full" expand="block" [routerLink]="['/objet']">
+              <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/mediatheque']">
                 Retour
               </ion-button>
             </ion-col>

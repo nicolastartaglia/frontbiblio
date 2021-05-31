@@ -16,6 +16,8 @@ export class ReferentDetailsPage implements OnInit {
   id: any;
   statut: '';
   referent: '';
+  Nom = '';
+  Prenom = '';
 
   constructor(
     private bibliothecaireService: BibliothecaireService,
@@ -35,10 +37,11 @@ export class ReferentDetailsPage implements OnInit {
       Statut: ['']
     });
     this.id = this.routeActive.snapshot.params['idReferent'];
-
     this.unBibliothecaire$ = this.bibliothecaireService.obtenirUnBibliothecaire(this.id)
       .subscribe(
         data => {
+          this.Nom = data.Nom;
+          this.Prenom = data.Prenom;
           this.statut = data.Statut;
           this.referent = data.Referent;
           this.editForm.patchValue({

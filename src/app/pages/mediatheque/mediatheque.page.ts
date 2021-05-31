@@ -20,7 +20,7 @@ export class MediathequePage implements OnInit {
     {url:'/modifierobjet', title: 'Modifier un objet'},
     {url:'/supprimerobjet', title: 'Supprimer un objet'},
     {url:'/objetperdu', title: 'Objets perdus'},
-    {url:'/objetabime', title: 'Objets abîmes'},
+    {url:'/objetabime', title: 'Objets abîmés'},
     {url:'/bibliothecaire', title: 'Retour au menu principal'}
   ];
   menuBibliothecaire = [

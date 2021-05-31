@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>referent-details</ion-title>
+    <ion-title>Bienvenue {{ Prenom }} {{ Nom }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -68,12 +68,12 @@
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <ion-row>
           <ion-col size-sm="5" offset-sm="1">
-            <ion-button type="submit" color="primary" shape="full" expand="block">
+            <ion-button type="submit" color="danger" shape="full" expand="block">
               Mettre à jour
             </ion-button>
           </ion-col>
           <ion-col size-sm="5" offset-sm="1">
-            <ion-button color="danger" shape="full" expand="block" (click)="retour()">
+            <ion-button color="tertiary" shape="full" expand="block" (click)="retour()">
               Annuler
             </ion-button>
           </ion-col>

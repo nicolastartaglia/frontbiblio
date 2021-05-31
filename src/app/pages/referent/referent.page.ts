@@ -27,13 +27,6 @@ export class ReferentPage implements OnInit {
   constructor(private bibliothecaireService: BibliothecaireService, private router: Router, private formBuilder: FormBuilder ) { }
 
   ngOnInit() {
-    console.log("ngOninit referent");
-    if (this.bibliothecaireService.estConnecte()) {
-      console.log("headers");
-      console.log(this.bibliothecaireService.headers);
-      if (!this.bibliothecaireService.estReferent()) {
-        this.router.navigateByUrl('');
-      }
       this.addForm = this.formBuilder.group({
         Id: [''],
         Nom: [''],
@@ -49,12 +42,7 @@ export class ReferentPage implements OnInit {
           this.Nom = data.Nom;
           this.Prenom = data.Prenom;
       });
-      // this.bibliothecaireService.pages$.next(this.menuReferent);
-      // this.bibliothecaireService.seDeconnecte$.next({affiche: true});
       this.bibliothecaires = this.bibliothecaireService.refreshBibliothecaires.pipe(switchMap(_ => this.bibliothecaireService.obtenirTousLesBibliothecaires()));
-    } else {
-      this.router.navigateByUrl('');
-    }
   }
 
   supprimerBibliothecaire(id) {
@@ -63,9 +51,6 @@ export class ReferentPage implements OnInit {
         (err) => console.log(err),
         () => { setTimeout(() => {this.bibliothecaireService.refreshBibliothecaires.next(true)}, 100);  }
       );
-
-
-
   }
 
   ajouterBibliothecaire() {
@@ -81,7 +66,6 @@ export class ReferentPage implements OnInit {
       Referent: 'false',
       Statut: 'Actif'
     });
-
   }
 
 }

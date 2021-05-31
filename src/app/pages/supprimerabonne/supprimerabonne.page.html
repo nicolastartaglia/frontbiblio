@@ -22,9 +22,18 @@
       </ion-row>
       <ion-row>
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-          <ion-button type="submit" color="primary" shape="full" expand="block" [disabled]="suppForm.invalid">
-            Afficher
-          </ion-button>
+          <ion-row>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button type="submit" color="primary" shape="full" expand="block" [disabled]="suppForm.invalid">
+                Afficher
+              </ion-button>
+            </ion-col>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/abonne']">
+                Retour
+              </ion-button>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
     </form>
@@ -79,7 +88,7 @@
             </ion-button>
           </ion-col>
           <ion-col size-sm="5" offset-sm="1">
-            <ion-button color="primary" shape="full" expand="block" [routerLink]="['/abonne']">
+            <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/abonne']">
               Retour
             </ion-button>
           </ion-col>

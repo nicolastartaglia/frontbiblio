@@ -39,10 +39,10 @@ export class AjouterobjetPage implements OnInit {
       Scenariste: [''],
       Genre: [''],
       Annee: [''],
-      Duree: [''],
+      Duree: [0],
       Description: [''],
       Edition: [''],
-      Pages: [''],
+      Pages: [0],
       Dessinateur: [''],
       Artiste: [''],
       Zone: [''],
@@ -51,18 +51,18 @@ export class AjouterobjetPage implements OnInit {
       Code3C: [''],
       Etat: [''],
       Reserve: [''],
-      TypeObjet: [''],
-      empruntId: [''],
+      DateReservation: [new Date("2020-01-01")],
+      TypeObjet: ['ecrit'],
+      empruntId: [1],
+      ReservePar: [1],
       CreePar: [idBibliothecaire],
       MisAJourPar: [idBibliothecaire]
     });
-
-
   }
 
   ajouterObjet() {
     this.objetService.ajouterUnObjet(this.addForm.value).subscribe((id) => {
-      this.message = "Objet enregistré";
+      this.message = "Objet enregistré avec le numéro d'identification "+id;
     });
     this.addForm.patchValue({
       Titre: '',
@@ -71,20 +71,16 @@ export class AjouterobjetPage implements OnInit {
       Scenariste: '',
       Genre: '',
       Annee: '',
-      Duree: '',
+      Duree: 0,
       Description: '',
       Edition: '',
-      Pages: '',
+      Pages: 0,
       Dessinateur: '',
       Artiste: '',
       Zone: '',
       Travee: '',
       EtagereBac: '',
-      CodeC: ''
+      Code3C: ''
     });
-
   }
-
-
-
 }

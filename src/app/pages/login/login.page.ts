@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.connexion = this.formBuilder.group({
       Email: ['', [Validators.required, Validators.email]],
-      Password: ['', [Validators.required, Validators.minLength(2)]]
+      Password: ['', [Validators.required, Validators.minLength(4)]]
     });
     console.log("ngOnInit login page");
   }

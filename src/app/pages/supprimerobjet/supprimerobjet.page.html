@@ -1,9 +1,181 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>supprimerobjet</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="titre"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span class="titre">Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <ion-grid>
+    <form [formGroup]="suppForm" (ngSubmit)="afficheObjet()">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Numéro d'objet</ion-label>
+            <ion-input formControlName="id" type="text" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button type="submit" color="primary" shape="full" expand="block" [disabled]="suppForm.invalid">
+                Afficher
+              </ion-button>
+            </ion-col>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/mediatheque']">
+                Retour
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ng-container *ngIf="idValide">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Titre: {{ objet.Titre }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="typeObjet == 'ecrit'">
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Auteur: {{ objet.AuteurScenariste }} </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="typeObjet == 'video'">
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Réalisateur: {{ objet.Realisateur }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="typeObjet == 'video'">
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Scénariste: {{ objet.Scenariste }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Genre: {{ objet.Genre }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Année: {{ objet.Annee }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="typeObjet !== 'ecrit'">
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Durée: {{ objet.Duree }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Description: {{ objet.Description }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Édition: {{ objet.Edition }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="typeObjet == 'ecrit'">
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Pages: {{ objet.Pages }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="typeObjet == 'ecrit'">
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Dessinateur: {{ objet.Dessinateur }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="typeObjet == 'audio'">
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Artiste/Compositeur/Interprète: {{ objet.Artiste }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Zone: {{ objet.Zone }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Travée: {{ objet.Travee }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Étagère/Bac: {{ objet.EtagereBac }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>Code titre/auteur: {{ objet.Code3C }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button color="danger" shape="full" expand="block" (click)="supprimerObjet()">
+                Supprimer
+              </ion-button>
+            </ion-col>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/mediatheque']">
+                Retour
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <span id="messageAlerte">
+            {{ messageAlerte }}
+          </span>
+          <span id="messageInfo">
+            {{ messageInfo }}
+          </span>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
 </ion-content>

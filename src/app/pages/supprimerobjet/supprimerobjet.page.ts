@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BibliothecaireService } from 'src/app/api/bibliothecaire.service';
+import { Objet } from 'src/app/models/objet';
+import { ObjetService } from '../../api/objet.service';
 
 @Component({
   selector: 'app-supprimerobjet',
@@ -7,9 +11,62 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SupprimerobjetPage implements OnInit {
 
-  constructor() { }
+  suppForm: FormGroup;
+  Nom = '';
+  Prenom = '';
+  messageAlerte = '';
+  messageInfo = '';
+  objet = new Objet(0, '', '', '', '', '', '', 0, '', '', 0, '', '', '', '', '', '', '', '', new Date(), 'ecrit', 0, 0, 0, 0);
+  idValide = false;
+  idBibliothecaire: number;
+  typeObjet = "ecrit";
+
+  constructor(private formBuilder: FormBuilder, private bibliothecaireService: BibliothecaireService, private objetService: ObjetService) { }
 
   ngOnInit() {
+    this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
+    this.bibliothecaireService.obtenirUnBibliothecaire(this.idBibliothecaire).subscribe(
+      (data) => {
+        this.Nom = data.Nom;
+        this.Prenom = data.Prenom;
+      }
+    );
+    this.suppForm = this.formBuilder.group({
+      id: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
+    });
+    this.messageInfo = '';
+    this.messageAlerte = '';
   }
 
+  afficheObjet() {
+    this.objetService.obtenirUnObjet(this.suppForm.value.id).subscribe((data) => {
+      if (!data.message) {
+        this.objet = data;
+        this.typeObjet = data.typeObjet;
+        this.messageAlerte = '';
+        this.idValide = true;
+      } else {
+        this.messageInfo = '';
+        this.messageAlerte = data.message;
+      }
+    });
+    this.suppForm.patchValue({
+      id: ''
+    });
+  }
+
+  supprimerObjet() {
+    if (this.objet.id !== 0) {
+      this.messageAlerte = '';
+      this.objetService.supprimerUnObjet(this.objet.id).subscribe((message) => {
+        this.messageInfo = message;
+        this.idValide = false;
+        this.typeObjet = "ecrit";
+        this.objet = new Objet(0, '', '', '', '', '', '', 0, '', '', 0, '', '', '', '', '', '', '', '', new Date(), 'ecrit', 0, 0, 0, 0);
+      });
+      this.suppForm.patchValue({
+        id: ''
+      });
+    }
+  }
 }

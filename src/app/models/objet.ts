@@ -15,11 +15,13 @@ export class Objet {
   public Zone: string;
   public Travee: string;
   public EtagereBac: string;
-  public Code3c: string;
+  public Code3C: string;
   public Etat: string;
   public Reserve: string;
+  public DateReservation: Date;
   public TypeObjet: string;
   public empruntId: number;
+  public ReservePar: number;
   public CreePar: number;
   public MisAJourPar: number;
 
@@ -39,11 +41,13 @@ export class Objet {
               Zone: string,
               Travee: string,
               EtagereBac: string,
-              Code3c: string,
+              Code3C: string,
               Etat: string,
               Reserve: string,
+              DateReservation: Date,
               TypeObjet: string,
               empruntId: number,
+              ReservePar: number,
               CreePar: number,
               MisAJourPar: number
                ) {
@@ -63,11 +67,13 @@ export class Objet {
     this.Zone = Zone;
     this.Travee = Travee;
     this.EtagereBac = EtagereBac;
-    this.Code3c = Code3c;
+    this.Code3C = Code3C;
     this.Etat = Etat;
     this.Reserve = Reserve;
+    this.DateReservation = DateReservation;
     this.TypeObjet = TypeObjet;
     this.empruntId = empruntId;
+    this.ReservePar = ReservePar;
     this.CreePar = CreePar;
     this.MisAJourPar = MisAJourPar;
   }
