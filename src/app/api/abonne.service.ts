@@ -11,7 +11,7 @@ import { BibliothecaireService } from './bibliothecaire.service';
 })
 export class AbonneService {
 
-  baseUrl = "http://192.168.200.176:8082/abonne/";
+  baseUrlAbonne = this.bibliothecaireService.backendUrl + "abonne/";
 
   NomRecherche = '';
   PrenomRecherche = '';
@@ -22,7 +22,7 @@ export class AbonneService {
   constructor(private httpClient: HttpClient, private bibliothecaireService: BibliothecaireService) { }
 
   obtenirQuelquesAbonnes(data: any): Observable<any> {
-    return this.httpClient.post(this.baseUrl+'recherche', data, { headers: this.bibliothecaireService.headers })
+    return this.httpClient.post(this.baseUrlAbonne+'recherche', data, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
           if(!data.message) {
@@ -39,7 +39,7 @@ export class AbonneService {
 
 
   ajouterUnAbonne(data: Abonne): Observable<any> {
-    return this.httpClient.post(this.baseUrl, data, { headers: this.bibliothecaireService.headers })
+    return this.httpClient.post(this.baseUrlAbonne, data, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
           return data.id;
@@ -49,7 +49,7 @@ export class AbonneService {
   }
 
   mettreAjourUnAbonne(id: number, data: Abonne): Observable<any> {
-    return this.httpClient.put(this.baseUrl + id, data, { headers: this.bibliothecaireService.headers })
+    return this.httpClient.put(this.baseUrlAbonne + id, data, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((res: any) => {
           console.log(res);
@@ -60,7 +60,7 @@ export class AbonneService {
   }
 
   supprimerUnAbonne(id: number): Observable<any> {
-    return this.httpClient.delete(this.baseUrl+id, { headers: this.bibliothecaireService.headers })
+    return this.httpClient.delete(this.baseUrlAbonne+id, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
           return data.message;
@@ -70,7 +70,7 @@ export class AbonneService {
   }
 
   obtenirUnAbonne(id: number ): Observable<any> {
-    return this.httpClient.get(this.baseUrl+id, { headers: this.bibliothecaireService.headers })
+    return this.httpClient.get(this.baseUrlAbonne+id, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
           return data;

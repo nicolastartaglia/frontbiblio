@@ -15,7 +15,7 @@ export class SupprimerabonnePage implements OnInit {
   Prenom = '';
   messageAlerte = '';
   messageInfo = '';
-  abonne = new Abonne(0, '', '', '', '', '', '', '', 0, 0, 0, 0);
+  abonne = new Abonne(0, '', '', '', '', '', '', '', 0, '', 0, 0);
   suppressionImpossible = true;
   idBibliothecaire: number;
 
@@ -61,7 +61,7 @@ export class SupprimerabonnePage implements OnInit {
       this.abonneService.supprimerUnAbonne(this.abonne.id).subscribe((message) => {
           this.messageInfo = message;
           this.suppressionImpossible = true;
-          this.abonne = new Abonne(0, '', '', '', '', '', '', '', 0, 0, 0, 0);
+          this.abonne = new Abonne(0, '', '', '', '', '', '', '', 0, '', 0, 0);
       });
       this.suppForm.patchValue({
         id: ''

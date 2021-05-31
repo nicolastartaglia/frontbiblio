@@ -10,23 +10,23 @@ import { BibliothecaireService } from './bibliothecaire.service';
 })
 export class ObjetService {
 
-  baseUrl = "http://192.168.200.176:8082/objet/";
+  baseUrlObjet = this.bibliothecaireService.backendUrl + "objet/";
 
-  NomRecherche = '';
-  PrenomRecherche = '';
-  EmailRecherche = '';
+  TitreRecherche = '';
+  AuteurArtisteRecherche = '';
+  TypeObjetRecherche = '';
 
   refreshObjets = new BehaviorSubject<boolean>(true);
 
   constructor(private httpClient: HttpClient, private bibliothecaireService: BibliothecaireService) { }
 
   obtenirQuelquesObjets(data: any): Observable<any> {
-    return this.httpClient.post(this.baseUrl+'recherche', data, { headers: this.bibliothecaireService.headers })
+    return this.httpClient.post(this.baseUrlObjet+'recherche', data, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
           if(!data.message) {
             data.sort((a, b) => {
-              return a.Nom.localeCompare(b.Nom);
+              return a.Titre.localeCompare(b.Titre);
             });
           }
           console.log(data);
@@ -38,7 +38,7 @@ export class ObjetService {
 
 
   ajouterUnObjet(data: Objet): Observable<any> {
-    return this.httpClient.post(this.baseUrl, data, { headers: this.bibliothecaireService.headers })
+    return this.httpClient.post(this.baseUrlObjet, data, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
           return data.id;
@@ -48,7 +48,7 @@ export class ObjetService {
   }
 
   mettreAjourUnObjet(id: number, data: Objet): Observable<any> {
-    return this.httpClient.put(this.baseUrl + id, data, { headers: this.bibliothecaireService.headers })
+    return this.httpClient.put(this.baseUrlObjet + id, data, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((res: any) => {
           console.log(res);
@@ -59,7 +59,7 @@ export class ObjetService {
   }
 
   supprimerUnObjet(id: number): Observable<any> {
-    return this.httpClient.delete(this.baseUrl+id, { headers: this.bibliothecaireService.headers })
+    return this.httpClient.delete(this.baseUrlObjet+id, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
           return data.message;
@@ -69,7 +69,7 @@ export class ObjetService {
   }
 
   obtenirUnObjet(id: number ): Observable<any> {
-    return this.httpClient.get(this.baseUrl+id, { headers: this.bibliothecaireService.headers })
+    return this.httpClient.get(this.baseUrlObjet+id, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
           return data;

@@ -10,7 +10,7 @@ export class Abonne {
   public Ville: string;
   public DateLimiteAbonnement: string;
   public Amende: number;
-  public PenaliteNbJours: number;
+  public DateEmpruntPossible: string;
   public CreePar: number;
   public MisAJourPar: number;
 
@@ -23,7 +23,7 @@ export class Abonne {
                Ville: string,
                DateLimiteAbonnement: string,
                Amende: number,
-               PenaliteNbJours: number,
+               DateEmpruntPossible: string,
                CreePar: number,
                MisAJourPar: number
                ) {
@@ -36,7 +36,7 @@ export class Abonne {
     this.Ville = Ville;
     this.DateLimiteAbonnement = DateLimiteAbonnement;
     this.Amende = Amende;
-    this.PenaliteNbJours = PenaliteNbJours;
+    this.DateEmpruntPossible = DateEmpruntPossible;
     this.CreePar = CreePar;
     this.MisAJourPar = MisAJourPar;
   }

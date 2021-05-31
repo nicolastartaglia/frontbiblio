@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { BibliothecaireService } from 'src/app/api/bibliothecaire.service';
 import { AbonneService } from '../../api/abonne.service';
 import { Abonne } from 'src/app/models/abonne';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-rechercheabonne',
@@ -49,7 +49,7 @@ export class RechercheabonnePage implements OnInit {
       console.log("valeurs de form");
       console.log(this.rechercheForm.value);
       console.log("liste réfarîchie");
-      this.messageInfo = "Modifications sur l'abonné n°"+this.idAbonne+" enregistrées";
+      this.messageInfo = "Modifications enregistréessur l'abonné n°"+this.idAbonne;
       this.abonnes = this.abonneService.refreshAbonnes.pipe(switchMap(_ => this.abonneService.obtenirQuelquesAbonnes(this.rechercheForm.value)));
     }
 

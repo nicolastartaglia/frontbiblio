@@ -82,8 +82,13 @@ const routes: Routes = [
   {
     path: 'abonne-details/:idAbonne',
     loadChildren: () => import('./pages/abonne-details/abonne-details.module').then( m => m.AbonneDetailsPageModule)
-  },  {
+  },
+  {
     path: 'rechercheobjet',
+    loadChildren: () => import('./pages/rechercheobjet/rechercheobjet.module').then( m => m.RechercheobjetPageModule)
+  },
+  {
+    path: 'rechercheobjet/:idObjet',
     loadChildren: () => import('./pages/rechercheobjet/rechercheobjet.module').then( m => m.RechercheobjetPageModule)
   },
   {
@@ -105,6 +110,10 @@ const routes: Routes = [
   {
     path: 'objetabime',
     loadChildren: () => import('./pages/objetabime/objetabime.module').then( m => m.ObjetabimePageModule)
+  },
+  {
+    path: 'objet-details/:idObjet',
+    loadChildren: () => import('./pages/objet-details/objet-details.module').then( m => m.ObjetDetailsPageModule)
   }
 
 

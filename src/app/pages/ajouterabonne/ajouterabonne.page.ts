@@ -45,7 +45,7 @@ export class AjouterabonnePage implements OnInit {
       Ville: [''],
       DateLimiteAbonnement: [datedb],
       Amende: [0],
-      PenaliteNbJours: [0],
+      DateEmpruntPossible: [datedb],
       CreePar: [idBibliothecaire],
       MisAJourPar: [idBibliothecaire]
     });

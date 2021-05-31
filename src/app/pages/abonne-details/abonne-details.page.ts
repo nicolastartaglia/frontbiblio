@@ -20,7 +20,7 @@ export class AbonneDetailsPage implements OnInit {
   messageInfo = '';
   idBibliothecaire: number;
   idAbonne: number;
-  abonne = new Abonne(0, '', '', '', '', '', '', '', 0, 0, 0, 0);
+  abonne = new Abonne(0, '', '', '', '', '', '', '', 0, '', 0, 0);
   formulaireModifie: any;
 
 constructor(
@@ -51,7 +51,7 @@ constructor(
       Ville: [''],
       DateLimiteAbonnement: [''],
       Amende: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      PenaliteNbJours: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      PenaliteNbJours: [''],
       CreePar: ['1'],
       MisAJourPar: [this.idBibliothecaire]
     });
@@ -61,7 +61,8 @@ constructor(
       console.log("données détails récupérées");
       console.log(this.abonne);
       const pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
-      const dateAffichee = this.abonne.DateLimiteAbonnement.substring(0, 10).replace(pattern, '$3-$2-$1');
+      const dateLimiteAffichee = this.abonne.DateLimiteAbonnement.substring(0, 10).replace(pattern, '$3-$2-$1');
+      const dateEmpruntAffichee = this.abonne.DateEmpruntPossible.substring(0, 10).replace(pattern, '$3-$2-$1');
       this.modifForm.patchValue({
         id: this.abonne.id,
         Prenom: this.abonne.Prenom,
@@ -70,9 +71,9 @@ constructor(
         Rue: this.abonne.Rue,
         CodePostal: this.abonne.CodePostal,
         Ville: this.abonne.Ville,
-        DateLimiteAbonnement: dateAffichee,
+        DateLimiteAbonnement: dateLimiteAffichee,
         Amende: this.abonne.Amende,
-        PenaliteNbJours: this.abonne.PenaliteNbJours,
+        DateEmpruntPossible: dateEmpruntAffichee,
         CreePar: this.abonne.CreePar,
         MisAJourPar: this.abonne.MisAJourPar
       });

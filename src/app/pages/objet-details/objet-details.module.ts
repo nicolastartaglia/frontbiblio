@@ -4,18 +4,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RechercheobjetPageRoutingModule } from './rechercheobjet-routing.module';
+import { ObjetDetailsPageRoutingModule } from './objet-details-routing.module';
 
-import { RechercheobjetPage } from './rechercheobjet.page';
+import { ObjetDetailsPage } from './objet-details.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RechercheobjetPageRoutingModule,
+    ObjetDetailsPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [RechercheobjetPage]
+  declarations: [ObjetDetailsPage]
 })
-export class RechercheobjetPageModule {}
+export class ObjetDetailsPageModule {}

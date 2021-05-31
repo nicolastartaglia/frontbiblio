@@ -31,7 +31,9 @@ export class BibliothecaireService {
 
   refreshBibliothecaires = new BehaviorSubject<boolean>(true);
 
-  baseUrl = "http://192.168.200.176:8082/bibliothecaire/";
+  frontUrl = "http://192.168.200.176:4200/";
+  backendUrl = "http://192.168.200.176:8082/";
+  baseUrlBibliothecaire = this.backendUrl + "bibliothecaire/";
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
@@ -57,7 +59,7 @@ export class BibliothecaireService {
   }
 
   seConnecter(bibliothecaire: Connexion): Observable<any> {
-    return this.httpClient.post(this.baseUrl + "connexion", bibliothecaire)
+    return this.httpClient.post(this.baseUrlBibliothecaire + "connexion", bibliothecaire)
       .pipe(
         map((data: any) => {
           if (data.accessToken) {
@@ -107,7 +109,7 @@ export class BibliothecaireService {
 
   obtenirTousLesBibliothecaires(): Observable<any> {
     console.log(this.headers );
-    return this.httpClient.get(this.baseUrl, { headers: this.headers })
+    return this.httpClient.get(this.baseUrlBibliothecaire, { headers: this.headers })
       .pipe(
         map((data: any) => {
           if(!data.message) {
@@ -123,7 +125,7 @@ export class BibliothecaireService {
   }
 
   obtenirUnBibliothecaire(id: number): Observable<any> {
-    return this.httpClient.get(this.baseUrl + id, { headers: this.headers })
+    return this.httpClient.get(this.baseUrlBibliothecaire + id, { headers: this.headers })
       .pipe(
         map((data: any) => {
           console.log(data);
@@ -134,7 +136,7 @@ export class BibliothecaireService {
   }
 
   mettreAjourUnBibliothecaire(id: number, data: Bibliothecaire): Observable<any> {
-    return this.httpClient.put(this.baseUrl + id, data, { headers: this.headers })
+    return this.httpClient.put(this.baseUrlBibliothecaire + id, data, { headers: this.headers })
       .pipe(
         map((res: any) => {
           console.log(res);
@@ -145,7 +147,7 @@ export class BibliothecaireService {
   }
 
   ajouterUnBibliothecaire(data: Bibliothecaire): Observable<any> {
-    return this.httpClient.post(this.baseUrl, data, { headers: this.headers })
+    return this.httpClient.post(this.baseUrlBibliothecaire, data, { headers: this.headers })
       .pipe(
         map((res: any) => {
           return res;
@@ -156,7 +158,7 @@ export class BibliothecaireService {
 
 
   supprimerUnBibliothecaire(id: number): Observable<any> {
-    return this.httpClient.delete(this.baseUrl + id, { headers: this.headers })
+    return this.httpClient.delete(this.baseUrlBibliothecaire + id, { headers: this.headers })
       .pipe(
         map((res: any) => {
 

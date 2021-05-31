@@ -1,9 +1,104 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>emprunt</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="titre"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span class="titre">Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+  <ion-grid>
+    <form [formGroup]="idForm" (ngSubmit)="afficheAbonne()">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Numéro d'abonné</ion-label>
+            <ion-input formControlName="id" type="text" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button type="submit" color="danger" shape="full" expand="block" [disabled]="idForm.invalid">
+                Enregistrer un emprunt
+              </ion-button>
+            </ion-col>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/mediatheque']">
+                Retour
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageAlerte">
+          {{ messageAlerte1 }}
+        </span>
+      </ion-col>
+    </ion-row>
+    <form [formGroup]="empruntForm" (ngSubmit)="enregistrerEmprunt()" *ngIf="idValide">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>-Nom: {{ NomAbonne }} -Prénom: {{ PrenomAbonne }}</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label>Date d'emprunt possible: {{ dateEmprunt }}</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label>Amende: {{ amende }}</ion-label>
+          <div class="item-note" item-end>
+            <ion-icon name="trash" style="zoom:2.0" (click)="solderAmende()"></ion-icon>
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label>Nombre d'objets empruntés: {{ nbemprunts }}</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
 
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-row>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button color="danger" shape="full" expand="block" [disabled]="empruntNonAutorise" (click)="ajouterObjet()">
+              Ajouter
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    </form>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageAlerte">
+          {{ messageAlerte2 }}
+        </span>
+        <span class="messageInfo">
+          {{ messageInfo }}
+        </span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+

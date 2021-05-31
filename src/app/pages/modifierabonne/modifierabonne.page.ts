@@ -20,7 +20,7 @@ export class ModifierabonnePage implements OnInit {
   messageAlerte2 = '';
   messageInfo = '';
   idBibliothecaire: number;
-  abonne = new Abonne(0, '', '', '', '', '', '', '', 0, 0, 0, 0);
+  abonne = new Abonne(0, '', '', '', '', '', '', '', 0, '', 0, 0);
   idValide = false;
 
   constructor(private formBuilder: FormBuilder, private bibliothecaireService: BibliothecaireService, private abonneService: AbonneService) { }
@@ -46,8 +46,8 @@ export class ModifierabonnePage implements OnInit {
       Ville: [''],
       DateLimiteAbonnement: [''],
       Amende: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      PenaliteNbJours: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      CreePar: ['1'],
+      DateEmpruntPossible: [''],
+      CreePar: [1],
       MisAJourPar: [this.idBibliothecaire]
     });
 
@@ -61,7 +61,8 @@ export class ModifierabonnePage implements OnInit {
         this.idValide = true;
         this.abonne = data;
         const pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
-        const dateAffichee = this.abonne.DateLimiteAbonnement.substring(0, 10).replace(pattern, '$3-$2-$1');
+        const dateLimiteAffichee = this.abonne.DateLimiteAbonnement.substring(0, 10).replace(pattern, '$3-$2-$1');
+        const dateEmpruntPossible = this.abonne.DateEmpruntPossible.substring(0, 10).replace(pattern, '$3-$2-$1');
         this.modifForm.patchValue({
           id: this.abonne.id,
           Prenom: this.abonne.Prenom,
@@ -70,9 +71,9 @@ export class ModifierabonnePage implements OnInit {
           Rue: this.abonne.Rue,
           CodePostal: this.abonne.CodePostal,
           Ville: this.abonne.Ville,
-          DateLimiteAbonnement: dateAffichee,
+          DateLimiteAbonnement: dateLimiteAffichee,
           Amende: this.abonne.Amende,
-          PenaliteNbJours: this.abonne.PenaliteNbJours,
+          DateEmpruntPossible: dateEmpruntPossible,
           CreePar: this.abonne.CreePar,
           MisAJourPar: this.abonne.MisAJourPar
         });
@@ -111,7 +112,7 @@ export class ModifierabonnePage implements OnInit {
           Ville: '',
           DateLimiteAbonnement: '',
           Amende: 0,
-          PenaliteNbJours: 0,
+          DateEmpruntPossible: '',
           CreePar: 1,
           MisAJourPar: 1
         });
