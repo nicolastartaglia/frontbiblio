@@ -10,13 +10,13 @@ import { AbonneService } from '../../api/abonne.service';
 })
 export class AjouterabonnePage implements OnInit {
 
-  dateLimiteFormatee = '';
   addForm: FormGroup;
   Nom = '';
   Prenom = '';
   message = '';
   messageInfo = '';
   idBibliothecaire: number;
+  dateLimiteFormatee = '';
 
 
   constructor(private formBuilder: FormBuilder, private bibliothecaireService: BibliothecaireService, private abonneService: AbonneService) { }
@@ -32,8 +32,7 @@ export class AjouterabonnePage implements OnInit {
     const dateJour = new Date();
     const dateLimite = new Date(dateJour.setDate(dateJour.getDate() + 365));
     this.dateLimiteFormatee = dateLimite.toLocaleDateString();
-    const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
-    const datedb = this.dateLimiteFormatee.replace(pattern, '$3-$2-$1');
+    const dateJourFormatee = (new Date()).toLocaleDateString();
     const idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
     this.addForm = this.formBuilder.group({
       id: [0],
@@ -43,17 +42,26 @@ export class AjouterabonnePage implements OnInit {
       Rue: [''],
       CodePostal: [''],
       Ville: [''],
-      DateLimiteAbonnement: [datedb],
+      DateLimiteAbonnement: [this.dateLimiteFormatee],
       Amende: [0],
-      DateEmpruntPossible: [datedb],
+      DateEmpruntPossible: [dateJourFormatee],
       CreePar: [idBibliothecaire],
       MisAJourPar: [idBibliothecaire]
     });
+    console.log(this.addForm.value);
 
 
   }
 
   ajouterAbonne() {
+    const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
+    const dateDbLimiteAbonnement = this.addForm.value.DateLimiteAbonnement.replace(pattern, '$3-$2-$1');
+    const dateDbEmpruntPossible = this.addForm.value.DateEmpruntPossible.replace(pattern, '$3-$2-$1');
+    this.addForm.patchValue({
+      DateLimiteAbonnement: dateDbLimiteAbonnement,
+      DateEmpruntPossible: dateDbEmpruntPossible
+    });
+    console.log(this.addForm.value);
     this.abonneService.ajouterUnAbonne(this.addForm.value).subscribe((id) => {
       this.message = "Abonné enregistré et identifié avec le numéro: "+id;
     });

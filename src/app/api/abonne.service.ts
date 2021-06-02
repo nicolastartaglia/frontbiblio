@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Abonne } from '../models/abonne';
+import { Emprunt } from '../models/emprunt';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BibliothecaireService } from './bibliothecaire.service';
 
+
+interface EmpruntDUnAbonne {
+  idAbonne: number;
+  Statut: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -73,6 +79,17 @@ export class AbonneService {
     return this.httpClient.get(this.baseUrlAbonne+id, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  obtenirLeDernierEmpruntDunAbonne(id: number): Observable<any> {
+    return this.httpClient.get(this.baseUrlAbonne+"emprunt/"+id, { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: Emprunt) => {
+          console.log(data);
           return data;
         }),
         catchError(this.errorMgmt)

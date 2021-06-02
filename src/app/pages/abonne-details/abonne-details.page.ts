@@ -51,7 +51,7 @@ constructor(
       Ville: [''],
       DateLimiteAbonnement: [''],
       Amende: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      PenaliteNbJours: [''],
+      DateEmpruntPossible: [''],
       CreePar: ['1'],
       MisAJourPar: [this.idBibliothecaire]
     });

@@ -9,6 +9,7 @@ import { Emprunt } from 'src/app/models/emprunt';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { calcPossibleSecurityContexts } from '@angular/compiler/src/template_parser/binding_parser';
 
 @Component({
   selector: 'app-emprunt',
@@ -28,9 +29,14 @@ export class EmpruntPage implements OnInit {
   messageAlerte2 = '';
   idObjet = '';
   idValide = false;
+  empruntPossible = true;
+  dateLimiteDepassee = false;
+  nbEmprunts = 0;
+  dateLimiteAffichee = '';
+  dateEmpruntPossibleAffichee = '';
 
   abonne = new Abonne(0, '', '', '', '', '', '', '', 0, '', 0, 0);
-  emprunt = new Emprunt(0, new Date(), '');
+ // emprunt = new Emprunt(0, new Date(), '');
 
   constructor(private formBuilder: FormBuilder,
     private bibliothecaireService: BibliothecaireService,
@@ -46,46 +52,64 @@ export class EmpruntPage implements OnInit {
         this.Prenom = data.Prenom;
       }
     );
-    this.empruntForm = this.formBuilder.group({
-      DateRetourLimite: [new Date("2020-01-01")],
-      Statut: ['']
+    this.idForm = this.formBuilder.group({
+      id: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     });
   }
 
-  enregistrerEmprunt(){
-    this.messageAlerte1 = '';
-    this.messageInfo = '';
+  afficheAbonne(){
     this.abonneService.obtenirUnAbonne(this.idForm.value.id).subscribe((data) => {
       if (!data.message) {
         this.idValide = true;
         this.abonne = data;
-        const pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
-        const dateLimiteAffichee = this.abonne.DateLimiteAbonnement.substring(0, 10).replace(pattern, '$3-$2-$1');
-        const dateEmpruntPossibleAffichee = this.abonne.DateEmpruntPossible.substring(0, 10).replace(pattern, '$3-$2-$1');
-        this.empruntForm.patchValue({
-          id: this.abonne.id,
-          Prenom: this.abonne.Prenom,
-          Nom: this.abonne.Nom,
-          DateLimiteAbonnementAffichee: dateLimiteAffichee,
-          DateLimiteAbonnement: this.abonne.DateLimiteAbonnement,
-          Amende: this.abonne.Amende,
-          DateEmpruntPossible: this.abonne.DateEmpruntPossible,
-          DateEmpruntPossibleAffichee: dateEmpruntPossibleAffichee
+        console.log(this.abonne);
+        this.abonneService.obtenirLeDernierEmpruntDunAbonne(this.abonne.id).subscribe(
+          (data) => {
+            if(!data.message){
+            //  console.log(data);
+              this.messageAlerte1 = "L'abonné n'a pas retourné son dernier emprunt";
+            } else {
+              // pas d'emprunt en cours
+              const dateJour = new Date();
+              const dateLimiteAbonnement = new Date(this.abonne.DateLimiteAbonnement);
+              const dateEmpruntPossible = new Date(this.abonne.DateEmpruntPossible);
+              const pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
+              this.dateLimiteAffichee = this.abonne.DateLimiteAbonnement.substring(0, 10).replace(pattern, '$3-$2-$1');
+              this.dateEmpruntPossibleAffichee = this.abonne.DateEmpruntPossible.substring(0, 10).replace(pattern, '$3-$2-$1');
+              if(dateEmpruntPossible > dateJour){
+                this.empruntPossible = false;
 
-        });
+              } else {
+                if(dateJour > dateLimiteAbonnement){
+                  this.dateLimiteDepassee = true;
+                }
+              }
+            }
+          }
+        )
       } else {
         this.idValide = false;
         this.messageAlerte1 = data.message;
       }
     });
-    this.idForm.patchValue({
-      id: ''
-    });
+  }
+
+  enregistrerEmprunt(){
+
 
   }
 
   solderAmende(){
 
   }
+
+  ajouterObjet() {
+
+  }
+
+  renouvelerAbonnement() {
+
+  }
+
 
 }

@@ -89,15 +89,17 @@ export class ModifierabonnePage implements OnInit {
 
   modifierAbonne() {
     const pattern = /(\d{2})\/(\d{2})\/(\d{4})/;
-    const dateDb = this.modifForm.value.DateLimiteAbonnement.replace(pattern, '$3-$2-$1') + this.abonne.DateLimiteAbonnement.substring(10, 24);
-    this.modifForm.patchValue({
-      DateLimiteAbonnement: dateDb
-    });
+    const dateDbLimiteAbonnement = this.modifForm.value.DateLimiteAbonnement.replace(pattern, '$3-$2-$1') + this.abonne.DateLimiteAbonnement.substring(10, 24);
+    const dateDbEmpruntPossible = this.modifForm.value.DateEmpruntPossible.replace(pattern, '$3-$2-$1') + this.abonne.DateEmpruntPossible.substring(10, 24);
     const dateJour = new Date();
-    const dateSaisie = new Date(dateDb);
+    const dateSaisie = new Date(dateDbLimiteAbonnement);
     if (dateSaisie < dateJour) {
       this.messageAlerte2 = "La date saisie ne peut être antérieure à la date d'aujourd'hui";
     } else {
+      this.modifForm.patchValue({
+        DateLimiteAbonnement: dateDbLimiteAbonnement,
+        DateEmpruntPossible: dateDbEmpruntPossible
+      });
       this.messageAlerte2 = '';
       this.idValide = false;
       this.abonneService.mettreAjourUnAbonne(this.abonne.id, this.modifForm.value).subscribe(() => {
