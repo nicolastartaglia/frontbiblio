@@ -96,6 +96,30 @@ export class AbonneService {
       );
   }
 
+  payerLAmende(id: number): Observable<any> {
+    return this.httpClient.put(this.baseUrlAbonne+"payerAmende/"+id, { headers: this.bibliothecaireService.headers })
+    .pipe(
+      map((data) => {
+        console.log(data);
+        return data;
+      }),
+      catchError(this.errorMgmt)
+    );
+  }
+
+  renouvelerAbonnement(id: number): Observable<any> {
+    return this.httpClient.put(this.baseUrlAbonne+"renouvelerAbonnement/"+id, { headers: this.bibliothecaireService.headers })
+    .pipe(
+      map((data) => {
+        console.log("data from bd");
+        console.log(data);
+        return data;
+      }),
+      catchError(this.errorMgmt)
+    );
+  }
+
+
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

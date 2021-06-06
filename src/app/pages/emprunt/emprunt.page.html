@@ -54,15 +54,15 @@
     </ion-row>
     <ion-row>
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-        <ion-row>
+        <ion-row >
           <ion-col size-sm="6">
             <ion-item>
               <ion-label>Date d'emprunt possible:</ion-label>
             </ion-item>
           </ion-col>
-          <ion-col size-sm="6">
+          <ion-col size-sm="6" >
             <ion-item>
-              <ion-label>{{ dateEmpruntPossibleAffichee }}</ion-label>
+              <ion-label [className]="empruntPossible ? 'info' : 'alerte'">{{ dateEmpruntPossibleAffichee }}</ion-label>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -78,7 +78,7 @@
           </ion-col>
           <ion-col size-sm="6">
             <ion-item>
-              <ion-label>{{ dateLimiteAffichee }}</ion-label>
+              <ion-label [className]="dateLimiteDepassee ? 'alerte' : 'info'">{{ dateLimiteAffichee }}</ion-label>
               <div class="item-note" item-end>
                 <ion-icon name="refresh-outline" style="zoom:2.0" (click)="renouvelerAbonnement()"></ion-icon>
               </div>
@@ -92,12 +92,12 @@
         <ion-row>
           <ion-col size-sm="6">
             <ion-item>
-              <ion-label>Amende:</ion-label>
+              <ion-label>Pénalités:</ion-label>
             </ion-item>
           </ion-col>
           <ion-col size-sm="6">
             <ion-item>
-              <ion-label>{{ abonne.Amende }} €</ion-label>
+              <ion-label [className]="(amende > 0) ? 'alerte' : 'info'">{{ amende }} €</ion-label>
               <div class="item-note" item-end>
                 <ion-icon name="close-outline" style="zoom:2.0" (click)="solderAmende()"></ion-icon>
               </div>
@@ -122,18 +122,35 @@
         </ion-row>
       </ion-col>
     </ion-row>
+    <form [formGroup]="addForm" (ngSubmit)="ajouterObjet()" *ngIf="idValide">
     <ion-row>
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <ion-row>
+          <ion-col size-sm="6">
+            <ion-item>
+              <ion-label>ID objet emprunté:</ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col size-sm="6">
+            <ion-item>
+              <ion-input formControlName="idObjet" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row >
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-row>
           <ion-col size-sm="5" offset-sm="1">
-            <ion-button color="danger" shape="full" expand="block" [disabled]="dateLimiteDepassee || !empruntPossible" (click)="ajouterObjet()">
+            <ion-button color="danger" shape="full" expand="block" [disabled]="dateLimiteDepassee || !empruntPossible || amende > 0 || addForm.invalid" type="submit">
               Ajouter
             </ion-button>
           </ion-col>
         </ion-row>
       </ion-col>
     </ion-row>
-
+    </form>
     <ion-row>
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <span class="messageAlerte">
@@ -145,7 +162,24 @@
       </ion-col>
     </ion-row>
   </ng-container>
+  <ng-container *ngIf="emprunts.length > 0">
+  <ng-container *ngFor="let emprunt of emprunts">
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label>
+            <h2>{{emprunt.Titre}}</h2>
+            <p>ID: {{emprunt.id}}</p>
+          </ion-label>
+          <div class="item-note" item-end>
 
+            <ion-icon name="trash" style="zoom:2.0" (click)="supprimerUnObjetEmprunte(emprunt.id)"></ion-icon>
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ng-container>
+</ng-container>
   </ion-grid>
 </ion-content>
 
