@@ -15,12 +15,21 @@ export class EmpruntService {
 
   baseUrlEmprunt = this.bibliothecaireService.backendUrl + "emprunt/";
 
-  dureeEnJoursEmpruntMaximum = 21;
+  dureeMaximumEnJoursEmprunt = 21;
   nombreMaxObjetsEmpruntes = 5;
+  dureeReservation = 5;
 
   constructor(private httpClient: HttpClient, private bibliothecaireService: BibliothecaireService) { }
 
-
+  emprunterDesObjets(data: object): Observable<any> {
+    return this.httpClient.post(this.baseUrlEmprunt, data, { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
 
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';

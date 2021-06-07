@@ -68,8 +68,18 @@ export class ObjetService {
       );
   }
 
-  obtenirUnObjet(id: number ): Observable<any> {
+  obtenirUnObjet(id: number): Observable<any> {
     return this.httpClient.get(this.baseUrlObjet+id, { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  obtenirUnObjetAEmprunter(data: object): Observable<any> {
+    return this.httpClient.post(this.baseUrlObjet+"emprunt", data, { headers: this.bibliothecaireService.headers })
       .pipe(
         map((data: any) => {
           return data;

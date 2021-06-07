@@ -6,6 +6,7 @@ import { Objet } from 'src/app/models/objet';
 import { AbonneService } from '../../api/abonne.service';
 import { Abonne } from 'src/app/models/abonne';
 import { Emprunt } from 'src/app/models/emprunt';
+import { EmpruntService } from 'src/app/api/emprunt.service';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -16,6 +17,7 @@ interface ObjetEmprunte {
   id: string;
   Titre: string;
 }
+
 @Component({
   selector: 'app-emprunt',
   templateUrl: './emprunt.page.html',
@@ -43,6 +45,8 @@ export class EmpruntPage implements OnInit {
   addForm: FormGroup;
   objetARetirer: number;
   objetDejaSelectionne: boolean;
+  initEmprunt: boolean;
+  envoyerRecu: boolean;
 
   abonne = new Abonne(0, '', '', '', '', '', '', '', 0, '', 0, 0);
  // emprunt = new Emprunt(0, new Date(), '');
@@ -52,11 +56,14 @@ export class EmpruntPage implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private bibliothecaireService: BibliothecaireService,
     private abonneService: AbonneService,
+    private empruntService: EmpruntService,
     private objetService: ObjetService,
     private route: ActivatedRoute,
     private cRef: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.initEmprunt = true;
+    this.envoyerRecu = false;;
     this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
     this.bibliothecaireService.obtenirUnBibliothecaire(this.idBibliothecaire).subscribe(
       (data) => {
@@ -75,6 +82,8 @@ export class EmpruntPage implements OnInit {
   }
 
   afficheAbonne(){
+    this.messageAlerte1 = '';
+    this.messageInfo = '';
     this.abonneService.obtenirUnAbonne(this.idForm.value.id).subscribe((data) => {
       if (!data.message) {
         this.idValide = true;
@@ -85,23 +94,19 @@ export class EmpruntPage implements OnInit {
           (data) => {
             if(!data.message){
             //  console.log(data);
-              this.messageAlerte1 = "L'abonné n'a pas retourné son dernier emprunt";
+              this.idValide = false;
+              this.messageAlerte1 = "Cet abonné n'a pas retourné son dernier emprunt";
             } else {
               // pas d'emprunt en cours
+              this.initEmprunt = false;
               const dateJour = new Date();
               const dateLimiteAbonnement = new Date(this.abonne.DateLimiteAbonnement);
               const dateEmpruntPossible = new Date(this.abonne.DateEmpruntPossible);
               const pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
               this.dateLimiteAffichee = this.abonne.DateLimiteAbonnement.substring(0, 10).replace(pattern, '$3-$2-$1');
               this.dateEmpruntPossibleAffichee = this.abonne.DateEmpruntPossible.substring(0, 10).replace(pattern, '$3-$2-$1');
-              console.log(dateEmpruntPossible);
-              console.log(dateJour);
-              console.log("date limute affichee");
-              console.log(this.dateLimiteAffichee);
               if(dateEmpruntPossible > dateJour){
-                console.log("emprunt impossble");
                 this.empruntPossible = false;
-
               } else {
 
               }
@@ -120,7 +125,21 @@ export class EmpruntPage implements OnInit {
   }
 
   enregistrerEmprunt(){
-
+    this.initEmprunt = true;
+    let tabObjetId = new Array();
+    for (let emprunt of this.emprunts){
+      tabObjetId.push(emprunt.id);
+    }
+    this.empruntService.emprunterDesObjets({ dureeEmprunt: this.empruntService.dureeMaximumEnJoursEmprunt, bibliothecaireId: this.idBibliothecaire, abonneId: this.abonne.id, objetsEmpruntes: tabObjetId }).subscribe(
+      (data) => {
+        this.idValide = false;
+        this.initEmprunt = true;
+        this.envoyerRecu = false;
+        this.emprunts.splice(0,this.emprunts.length)
+        this.nbEmprunts = 0;
+        this.messageInfo = data.message;
+      }
+    );
 
   }
 
@@ -137,32 +156,36 @@ export class EmpruntPage implements OnInit {
 
   ajouterObjet() {
     this.messageAlerte2 = '';
-    this.objetService.obtenirUnObjet(this.addForm.value.idObjet).subscribe(
-      (data) => {
-        if(!data.message){
-          console.log(data);
-          this.objetDejaSelectionne = false;
-          for (let emprunt of this.emprunts){
-            if (emprunt.id == data.id){
-              this.objetDejaSelectionne = true;
-              break;
+    console.log(this.nbEmprunts);
+    if (this.nbEmprunts < this.empruntService.nombreMaxObjetsEmpruntes) {
+      this.objetService.obtenirUnObjetAEmprunter(this.addForm.value.idObjet).subscribe(
+        (data) => {
+          if(!data.message){
+            console.log(data);
+            this.objetDejaSelectionne = false;
+            for (let emprunt of this.emprunts){
+              if (emprunt.id == data.id){
+                this.objetDejaSelectionne = true;
+                break;
+              }
             }
-          }
-          if(!this.objetDejaSelectionne){
-            this.emprunts.push({id: data.id, Titre: data.Titre });
-            this.nbEmprunts = this.nbEmprunts + 1;
+            if(!this.objetDejaSelectionne){
+              this.emprunts.push({id: data.id, Titre: data.Titre });
+              this.nbEmprunts = this.nbEmprunts + 1;
+            } else {
+              this.messageAlerte2 = "Objet déjà pris en compte"
+            }
+            this.addForm.patchValue({
+              idObjet: ''
+            });
           } else {
-            this.messageAlerte2 = "Objet déjà pris en compte"
+            this.messageAlerte2 = data.message;
           }
-
-
-          this.addForm.patchValue({
-            idObjet: ''
-          });
-
         }
-      }
-    );
+      );
+    } else {
+      this.messageAlerte2 = "Nombre maximum d'objets empruntés atteint! "
+    }
   }
 
   renouvelerAbonnement() {
@@ -188,7 +211,15 @@ export class EmpruntPage implements OnInit {
       }
     }
     this.emprunts.splice(this.objetARetirer, 1);
+    this.nbEmprunts = this.nbEmprunts - 1;
 
+  }
+
+  reSelectionnerIdAbonne() {
+    this.idValide = false;
+    this.initEmprunt = true;
+    this.emprunts.splice(0,this.emprunts.length)
+    this.nbEmprunts = 0;
   }
 
 
