@@ -130,7 +130,12 @@ export class EmpruntPage implements OnInit {
     for (let emprunt of this.emprunts){
       tabObjetId.push(emprunt.id);
     }
-    this.empruntService.emprunterDesObjets({ dureeEmprunt: this.empruntService.dureeMaximumEnJoursEmprunt, bibliothecaireId: this.idBibliothecaire, abonneId: this.abonne.id, objetsEmpruntes: tabObjetId }).subscribe(
+    this.empruntService.emprunterDesObjets({
+      dureeEmprunt: this.empruntService.dureeMaximumEnJoursEmprunt,
+      bibliothecaireId: this.idBibliothecaire,
+      abonneId: this.abonne.id,
+      objetsEmpruntes: tabObjetId
+    }).subscribe(
       (data) => {
         this.idValide = false;
         this.initEmprunt = true;
@@ -140,7 +145,6 @@ export class EmpruntPage implements OnInit {
         this.messageInfo = data.message;
       }
     );
-
   }
 
   solderAmende(){
@@ -158,7 +162,11 @@ export class EmpruntPage implements OnInit {
     this.messageAlerte2 = '';
     console.log(this.nbEmprunts);
     if (this.nbEmprunts < this.empruntService.nombreMaxObjetsEmpruntes) {
-      this.objetService.obtenirUnObjetAEmprunter(this.addForm.value.idObjet).subscribe(
+      this.objetService.obtenirUnObjetAEmprunter({
+        objetId: this.addForm.value.idObjet,
+        abonneId: this.abonne.id,
+        dureeReservation: this.empruntService.dureeMaxReservation
+      }).subscribe(
         (data) => {
           if(!data.message){
             console.log(data);
@@ -220,6 +228,9 @@ export class EmpruntPage implements OnInit {
     this.initEmprunt = true;
     this.emprunts.splice(0,this.emprunts.length)
     this.nbEmprunts = 0;
+    this.idForm.patchValue({
+      id: ''
+    });
   }
 
 
