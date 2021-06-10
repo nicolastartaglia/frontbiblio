@@ -31,6 +31,26 @@ export class EmpruntService {
       );
   }
 
+  retournerDesObjets(data: object): Observable<any> {
+    return this.httpClient.post(this.baseUrlEmprunt+"retour", data, { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  obtenirLaListeDesObjetsEmpruntes(empruntId: number): Observable<any>  {
+    return this.httpClient.get(this.baseUrlEmprunt+empruntId, { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

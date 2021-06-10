@@ -5,13 +5,8 @@ import { ObjetService } from '../../api/objet.service';
 import { Objet } from 'src/app/models/objet';
 import { AbonneService } from '../../api/abonne.service';
 import { Abonne } from 'src/app/models/abonne';
-import { Emprunt } from 'src/app/models/emprunt';
 import { EmpruntService } from 'src/app/api/emprunt.service';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
-import { calcPossibleSecurityContexts } from '@angular/compiler/src/template_parser/binding_parser';
-import { ChangeDetectorRef } from '@angular/core';
 
 interface ObjetEmprunte {
   id: string;
@@ -49,21 +44,18 @@ export class EmpruntPage implements OnInit {
   envoyerRecu: boolean;
 
   abonne = new Abonne(0, '', '', '', '', '', '', '', 0, '', 0, 0);
- // emprunt = new Emprunt(0, new Date(), '');
 
   emprunts: Array<ObjetEmprunte> = [];
 
   constructor(private formBuilder: FormBuilder,
-    private bibliothecaireService: BibliothecaireService,
-    private abonneService: AbonneService,
-    private empruntService: EmpruntService,
-    private objetService: ObjetService,
-    private route: ActivatedRoute,
-    private cRef: ChangeDetectorRef) { }
+              private bibliothecaireService: BibliothecaireService,
+              private abonneService: AbonneService,
+              private empruntService: EmpruntService,
+              private objetService: ObjetService) { }
 
   ngOnInit() {
     this.initEmprunt = true;
-    this.envoyerRecu = false;;
+    this.envoyerRecu = false;
     this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
     this.bibliothecaireService.obtenirUnBibliothecaire(this.idBibliothecaire).subscribe(
       (data) => {
@@ -75,10 +67,8 @@ export class EmpruntPage implements OnInit {
       id: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     });
     this.addForm = this.formBuilder.group({
-      idObjet: ['', Validators.required]
+      idObjet: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]]
     });
-    console.log("taille tableau");
-    console.log(this.emprunts.length);
   }
 
   afficheAbonne(){
@@ -93,7 +83,6 @@ export class EmpruntPage implements OnInit {
         this.abonneService.obtenirLeDernierEmpruntDunAbonne(this.abonne.id).subscribe(
           (data) => {
             if(!data.message){
-            //  console.log(data);
               this.idValide = false;
               this.messageAlerte1 = "Cet abonné n'a pas retourné son dernier emprunt";
             } else {
@@ -152,8 +141,6 @@ export class EmpruntPage implements OnInit {
       (data) => {
         this.amende = data.Amende;
         console.log(this.amende);
-
-     //   this.cRef.detectChanges();
       }
     );
   }
@@ -220,7 +207,6 @@ export class EmpruntPage implements OnInit {
     }
     this.emprunts.splice(this.objetARetirer, 1);
     this.nbEmprunts = this.nbEmprunts - 1;
-
   }
 
   reSelectionnerIdAbonne() {
