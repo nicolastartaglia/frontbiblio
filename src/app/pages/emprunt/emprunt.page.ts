@@ -36,7 +36,6 @@ export class EmpruntPage implements OnInit {
   nbEmprunts = 0;
   dateLimiteAffichee = '';
   dateEmpruntPossibleAffichee = '';
-  amende: number;
   addForm: FormGroup;
   objetARetirer: number;
   objetDejaSelectionne: boolean;
@@ -78,8 +77,6 @@ export class EmpruntPage implements OnInit {
       if (!data.message) {
         this.idValide = true;
         this.abonne = data;
-        console.log(this.abonne);
-        this.amende = this.abonne.Amende;
         this.abonneService.obtenirLeDernierEmpruntDunAbonne(this.abonne.id).subscribe(
           (data) => {
             if(!data.message){
@@ -96,11 +93,8 @@ export class EmpruntPage implements OnInit {
               this.dateEmpruntPossibleAffichee = this.abonne.DateEmpruntPossible.substring(0, 10).replace(pattern, '$3-$2-$1');
               if(dateEmpruntPossible > dateJour){
                 this.empruntPossible = false;
-              } else {
-
               }
               if(dateJour > dateLimiteAbonnement){
-                console.log("dépassée");
                 this.dateLimiteDepassee = true;
               }
             }
@@ -139,8 +133,7 @@ export class EmpruntPage implements OnInit {
   solderAmende(){
     this.abonneService.payerLAmende(this.abonne.id).subscribe(
       (data) => {
-        this.amende = data.Amende;
-        console.log(this.amende);
+        this.abonne.Amende = data.Amende;
       }
     );
   }
@@ -186,14 +179,9 @@ export class EmpruntPage implements OnInit {
   renouvelerAbonnement() {
     this.abonneService.renouvelerAbonnement(this.abonne.id).subscribe(
       (data) => {
-         console.log("donnéés bd abonnement renouvelé");
-         console.log(data);
          const pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
          this.dateLimiteAffichee = data.DateLimiteAbonnement.substring(0, 10).replace(pattern, '$3-$2-$1');
          this.dateLimiteDepassee = false;
-         console.log("date limite dépassée");
-         console.log(this.dateLimiteAffichee);
-       //  this.cRef.detectChanges();
       }
     )
   }

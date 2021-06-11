@@ -18,6 +18,8 @@ export class EmpruntService {
   dureeMaximumEnJoursEmprunt = 21;
   nombreMaxObjetsEmpruntes = 5;
   dureeMaxReservation = 5;
+  amendeObjetAbime = 1;
+  amendeObjetPerdu = 7;
 
   constructor(private httpClient: HttpClient, private bibliothecaireService: BibliothecaireService) { }
 

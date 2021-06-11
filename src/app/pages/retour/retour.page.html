@@ -4,9 +4,9 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-thumbnail slot="start">
-      <ion-img src="assets/images/logo.svg" class="titre"></ion-img>
+      <ion-img src="assets/images/logo.svg" class="logo"></ion-img>
     </ion-thumbnail>
-    <ion-title><span class="titre">Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
+    <ion-title><span>Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -30,7 +30,7 @@
                 </ion-button>
               </ion-col>
               <ion-col size-sm="5" offset-sm="1">
-                <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/mediatheque']">
+                <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/bibliothecaire']">
                   Retour
                 </ion-button>
               </ion-col>
@@ -114,7 +114,7 @@
               </ion-item>
             </ion-col>
             <ion-col size-sm="6">
-              <ion-item class="ion-text-end">
+              <ion-item [ngClass]="retardRetour > 0 ? 'alerte ion-text-end' : 'info ion-text-end'">
                 <ion-label>{{ retardRetour }}</ion-label>
               </ion-item>
             </ion-col>
@@ -131,8 +131,8 @@
             </ion-col>
             <ion-col size-sm="6">
               <ion-item>
-                <ion-label [className]="(amende > 0) ? 'alerte ion-text-end' : 'info ion-text-end'">{{ amende }} €</ion-label>
-                <div class="item-note" item-end *ngIf="amende > 0">
+                <ion-label [ngClass]="abonne.Amende > 0 ? 'alerte ion-text-end' : 'info ion-text-end'">{{ abonne.Amende }} €</ion-label>
+                <div class="item-note" item-end *ngIf="abonne.Amende > 0">
                   <ion-icon name="close-outline" style="zoom:2.0" (click)="solderAmende()"></ion-icon>
                 </div>
               </ion-item>
@@ -170,6 +170,25 @@
               <div id="ok{{emprunt.id}}" class="item-note" style="display: none;" item-end>
                 <ion-img src="assets/images/ok.svg" class="statut"></ion-img>
               </div>
+              <ion-list>
+                <ion-radio-group id="etat{{emprunt.id}}" value="correct" (ionChange)="evalAmende($event)">
+                  <ion-list-header>
+                    <ion-label>État</ion-label>
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Correct</ion-label>
+                    <ion-radio slot="start" value="correct"></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Abîmé</ion-label>
+                    <ion-radio slot="start" value="abime"></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Perdu</ion-label>
+                    <ion-radio slot="start" value="perdu"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -208,18 +227,6 @@
         </ion-col>
       </ion-row>
     </ng-container>
-    <!-- <ng-container *ngFor="let retour of retours">
-      <ion-row>
-        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-          <ion-item>
-            <ion-label>
-              <h2>{{retour.Titre}}</h2>
-              <p>ID: {{retour.id}}</p>
-            </ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ng-container> -->
     <ion-row *ngIf="retourValide">
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <ion-row>

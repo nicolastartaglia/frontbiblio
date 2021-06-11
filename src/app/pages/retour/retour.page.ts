@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 
 interface ObjetRetourne {
   id: number;
-  Statut: string;
+  Etat: string;
 }
 
 @Component({
@@ -33,7 +33,6 @@ export class RetourPage implements OnInit {
   messageInfo = '';
   idValide: boolean;
   abonne = new Abonne(0, '', '', '', '', '', '', '', 0, '', 0, 0);
-  amende: number;
   dateEmpruntAffichee = '';
   dateRetourAffichee = '';
   dateLimiteAffichee = '';
@@ -44,6 +43,7 @@ export class RetourPage implements OnInit {
   retours: Array<ObjetRetourne> = [];
   retourValide: boolean;
   empruntId: number;
+
 
   constructor(private formBuilder: FormBuilder,
     private bibliothecaireService: BibliothecaireService,
@@ -77,8 +77,6 @@ export class RetourPage implements OnInit {
       if (!abonne.message) {
         this.idValide = true;
         this.abonne = abonne;
-        console.log(this.abonne);
-        this.amende = this.abonne.Amende;
         this.abonneService.obtenirLeDernierEmpruntDunAbonne(this.abonne.id).subscribe(
           (emprunt) => {
             if (emprunt.message) {
@@ -111,12 +109,12 @@ export class RetourPage implements OnInit {
                     this.emprunts = listeObjets;
                     this.nbEmprunts = listeObjets.length;
                     for (let emprunt of this.emprunts) {
-                      this.retours.push({ id: emprunt.id, Statut: "emprunté" });
+                      this.retours.push({ id: emprunt.id, Etat: "correct" });
                     }
                   }
-                });
+                }
+              );
             }
-            // console.log(data);
           }
         )
       } else {
@@ -127,7 +125,44 @@ export class RetourPage implements OnInit {
   }
 
   solderAmende() {
+    this.abonne.Amende = 0;
+  }
 
+  reCalculerAmende(objetId: number) {
+    this.abonne.Amende = 0;
+    for (let retour of this.retours) {
+      if (retour.Etat == "abime") {
+        this.abonne.Amende = this.abonne.Amende + this.empruntService.amendeObjetAbime;
+      } else if (retour.Etat == "perdu") {
+        this.abonne.Amende = this.abonne.Amende + this.empruntService.amendeObjetPerdu;
+      }
+    }
+  }
+
+  evalAmende($event) {
+    const identifiantBoutonRadio = $event.srcElement.id;
+    const objetId = parseInt(identifiantBoutonRadio.split('etat')[1]);
+    const etatObjet = $event.srcElement.value;
+    for (let retour of this.retours) {
+      if (retour.id == objetId) {
+        if(etatObjet == "perdu"){
+          const styleAffichageObjetRetourne = document.getElementById("ok" + objetId).style.display;
+          if (styleAffichageObjetRetourne != "block"){
+            document.getElementById("ok" + objetId).style.display = "block";
+            document.getElementById("wrong" + objetId).style.display = "none";
+            this.nbRetours = this.nbRetours + 1;
+          }
+        }
+        if(retour.Etat == "perdu"){
+          document.getElementById("ok" + objetId).style.display = "none";
+          document.getElementById("wrong" + objetId).style.display = "block";
+          this.nbRetours = this.nbRetours - 1;
+        }
+        retour.Etat = etatObjet;
+        break;
+      }
+    }
+    this.reCalculerAmende(objetId);
   }
 
   ajouterObjet() {
@@ -136,7 +171,6 @@ export class RetourPage implements OnInit {
     let idObjet = 0;
     for (let retour of this.retours) {
       if (retour.id == this.addForm.value.idObjet) {
-        retour.Statut = "retourné";
         idTrouve = true;
         idObjet = retour.id;
         this.nbRetours = this.nbRetours + 1;
@@ -163,18 +197,15 @@ export class RetourPage implements OnInit {
     this.retourValide = false;
     this.nbRetours = 0;
     this.retours.splice(0,this.retours.length);
-
   }
 
   enregistrerRetour() {
-    let tabObjetId = new Array();
-    for (let retour of this.retours){
-      tabObjetId.push(retour.id);
-    }
     this.empruntService.retournerDesObjets({
       bibliothecaireId: this.idBibliothecaire,
+      abonneId: this.abonne.id,
+      Amende: this.abonne.Amende,
       empruntId: this.empruntId,
-      objetsRetournes: tabObjetId
+      objetsRetournes: this.retours
     }).subscribe(
       (data) => {
         this.idValide = false;
@@ -185,7 +216,5 @@ export class RetourPage implements OnInit {
         this.messageInfo = data.message;
       }
     );
-
   }
-
 }

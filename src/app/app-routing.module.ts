@@ -114,7 +114,12 @@ const routes: Routes = [
   {
     path: 'objet-details/:idObjet',
     loadChildren: () => import('./pages/objet-details/objet-details.module').then( m => m.ObjetDetailsPageModule)
+  },
+  {
+    path: 'rechercher-details/:idObjet',
+    loadChildren: () => import('./pages/rechercher-details/rechercher-details.module').then( m => m.RechercherDetailsPageModule)
   }
+
 
 
 
