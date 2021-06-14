@@ -6,6 +6,7 @@ import { Objet } from 'src/app/models/objet';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-rechercheobjet',
@@ -25,7 +26,8 @@ export class RechercheobjetPage implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private bibliothecaireService: BibliothecaireService,
               private objetService: ObjetService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
@@ -56,11 +58,29 @@ export class RechercheobjetPage implements OnInit {
   }
 
   supprimerObjet(id) {
-    this.objetService.supprimerUnObjet(id).subscribe(
-      () => {},
-      (err) => console.log(err),
-      () => { setTimeout(() => {this.objetService.refreshObjets.next(true)}, 100);  }
-    );
+    this.alertCtrl.create({
+      header: "Confirmation",
+      message: "Confirmez-vous la suppression ?",
+      buttons: [
+        {
+          text: "Non",
+          role: "Cancel"
+        },
+        {
+          text: "Oui",
+          handler: () => {
+            this.objetService.supprimerUnObjet(id).subscribe(
+              () => {},
+              (err) => console.log(err),
+              () => { setTimeout(() => {this.objetService.refreshObjets.next(true)}, 100);  }
+            );
+          }
+        }
+      ]
+    })
+    .then(alertElement => {
+      alertElement.present();
+    });
 
   }
 }

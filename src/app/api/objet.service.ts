@@ -88,6 +88,16 @@ export class ObjetService {
       );
   }
 
+  reserverUnObjet(data: object): Observable<any> {
+    return this.httpClient.post(this.baseUrlObjet+"reserver", data, { headers: this.bibliothecaireService.headers })
+    .pipe(
+      map((data: any) => {
+        return data;
+      }),
+      catchError(this.errorMgmt)
+    );
+  }
+
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

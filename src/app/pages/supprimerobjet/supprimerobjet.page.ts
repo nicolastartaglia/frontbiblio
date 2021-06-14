@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BibliothecaireService } from 'src/app/api/bibliothecaire.service';
 import { Objet } from 'src/app/models/objet';
 import { ObjetService } from '../../api/objet.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-supprimerobjet',
@@ -21,7 +22,10 @@ export class SupprimerobjetPage implements OnInit {
   idBibliothecaire: number;
   typeObjet = "ecrit";
 
-  constructor(private formBuilder: FormBuilder, private bibliothecaireService: BibliothecaireService, private objetService: ObjetService) { }
+  constructor(private formBuilder: FormBuilder,
+              private bibliothecaireService: BibliothecaireService,
+              private objetService: ObjetService,
+              private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
@@ -57,16 +61,36 @@ export class SupprimerobjetPage implements OnInit {
 
   supprimerObjet() {
     if (this.objet.id !== 0) {
-      this.messageAlerte = '';
-      this.objetService.supprimerUnObjet(this.objet.id).subscribe((message) => {
-        this.messageInfo = message;
-        this.idValide = false;
-        this.typeObjet = "ecrit";
-        this.objet = new Objet(0, '', '', '', '', '', '', 0, '', '', 0, '', '', '', '', '', '', '', '', new Date(), 'ecrit', 0, 0, 0, 0);
+      this.alertCtrl.create({
+        header: "Confirmation",
+        message: "Confirmez-vous la suppression ?",
+        buttons: [
+          {
+            text: "Non",
+            role: "Cancel"
+          },
+          {
+            text: "Oui",
+            handler: () => {
+              this.messageAlerte = '';
+              this.objetService.supprimerUnObjet(this.objet.id).subscribe((message) => {
+                console.log(message);
+                this.messageInfo = message;
+                console.log(this.messageInfo);
+                this.idValide = false;
+                this.typeObjet = "ecrit";
+                this.objet = new Objet(0, '', '', '', '', '', '', 0, '', '', 0, '', '', '', '', '', '', '', '', new Date(), 'ecrit', 0, 0, 0, 0);
+              });
+              this.suppForm.patchValue({
+                id: ''
+              });
+            }
+          }]
+      })
+      .then(alertElement => {
+        alertElement.present();
       });
-      this.suppForm.patchValue({
-        id: ''
-      });
+
     }
   }
 }

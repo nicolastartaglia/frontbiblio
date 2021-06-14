@@ -5,6 +5,7 @@ import { Bibliothecaire } from '../../models/bibliothecaire';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-referent',
@@ -24,7 +25,9 @@ export class ReferentPage implements OnInit {
 
   bibliothecaires: Observable<Array<Bibliothecaire>>;
 
-  constructor(private bibliothecaireService: BibliothecaireService, private router: Router, private formBuilder: FormBuilder ) { }
+  constructor(private bibliothecaireService: BibliothecaireService,
+              private alertCtrl: AlertController,
+              private formBuilder: FormBuilder ) { }
 
   ngOnInit() {
       this.addForm = this.formBuilder.group({
@@ -46,11 +49,28 @@ export class ReferentPage implements OnInit {
   }
 
   supprimerBibliothecaire(id) {
-      this.bibliothecaireService.supprimerUnBibliothecaire(id).subscribe(
-        () => {  },
-        (err) => console.log(err),
-        () => { setTimeout(() => {this.bibliothecaireService.refreshBibliothecaires.next(true)}, 100);  }
-      );
+    this.alertCtrl.create({
+      header: "Confirmation",
+      message: "Confirmez-vous la suppression ?",
+      buttons: [
+        {
+          text: "Non",
+          role: "Cancel"
+        },
+        {
+          text: "Oui",
+          handler: () => {
+            this.bibliothecaireService.supprimerUnBibliothecaire(id).subscribe(
+              () => {  },
+              (err) => console.log(err),
+              () => { setTimeout(() => {this.bibliothecaireService.refreshBibliothecaires.next(true)}, 100);  }
+            );
+          }
+      }]
+    })
+    .then(alertElement => {
+      alertElement.present();
+    });
   }
 
   ajouterBibliothecaire() {

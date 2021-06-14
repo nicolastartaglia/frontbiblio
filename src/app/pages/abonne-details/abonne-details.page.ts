@@ -56,7 +56,6 @@ constructor(
       MisAJourPar: [this.idBibliothecaire]
     });
     this.abonneService.obtenirUnAbonne(this.idAbonne).subscribe((data) => {
-
       this.abonne = data;
       console.log("données détails récupérées");
       console.log(this.abonne);

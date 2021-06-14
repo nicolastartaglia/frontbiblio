@@ -6,6 +6,7 @@ import { Abonne } from 'src/app/models/abonne';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-rechercheabonne',
@@ -26,7 +27,8 @@ export class RechercheabonnePage implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private bibliothecaireService: BibliothecaireService,
               private abonneService: AbonneService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private alertCtrl: AlertController) { }
 
   ngOnInit() {
 
@@ -66,11 +68,29 @@ export class RechercheabonnePage implements OnInit {
   }
 
   supprimerAbonne(id) {
-    this.abonneService.supprimerUnAbonne(id).subscribe(
-      () => {},
-      (err) => console.log(err),
-      () => { setTimeout(() => {this.abonneService.refreshAbonnes.next(true)}, 100);  }
-    );
+    this.alertCtrl.create({
+      header: "Confirmation",
+      message: "Confirmez-vous la suppression ?",
+      buttons: [
+        {
+          text: "Non",
+          role: "Cancel"
+        },
+        {
+          text: "Oui",
+          handler: () => {
+            this.abonneService.supprimerUnAbonne(id).subscribe(
+              () => {},
+              (err) => console.log(err),
+              () => { setTimeout(() => {this.abonneService.refreshAbonnes.next(true)}, 100);  }
+            );
+          }
+        }
+      ]
+    })
+    .then(alertElement => {
+      alertElement.present();
+    });
 
   }
 }

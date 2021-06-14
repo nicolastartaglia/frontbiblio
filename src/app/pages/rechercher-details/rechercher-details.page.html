@@ -63,7 +63,11 @@
     <ion-row>
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <ion-item>
-          <ion-label>Description: {{ objet.Description }}</ion-label>
+          <ion-label>Description:</ion-label>
+          <ion-textarea
+          rows="6"
+          readonly
+          value="{{objet.Description}}"></ion-textarea>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -123,17 +127,12 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <!-- <ion-row *ngIf="reservationPossible">
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <ion-row>
-          <ion-col size-sm="4" size-xl="4">
+          <ion-col size-sm="6">
             <ion-button color="danger" shape="full" expand="block" (click)="reserverObjet()">
               Réserver
-            </ion-button>
-          </ion-col>
-          <ion-col size-sm="7" offset-sm="1" size-xl="7" offset-xl="1">
-            <ion-button color="success" shape="full" expand="block" [routerLink]="['/commentaire']">
-              Ajouter commentaire
             </ion-button>
           </ion-col>
         </ion-row>
@@ -142,9 +141,26 @@
     <ion-row>
       <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
         <ion-row>
-          <ion-col size-sm="12">
+          <ion-col size-sm="6">
+            <ion-button color="success" shape="full" expand="block" [routerLink]="['/commentaire']">
+              Commentaires
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row> -->
+
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-row>
+          <ion-col size-sm="5" offset-sm="1">
             <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/rechercher']">
               Retour
+            </ion-button>
+          </ion-col>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/commentaire']">
+              Commentaires
             </ion-button>
           </ion-col>
         </ion-row>

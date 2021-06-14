@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BibliothecaireService } from 'src/app/api/bibliothecaire.service';
 import { Abonne } from 'src/app/models/abonne';
 import { AbonneService } from '../../api/abonne.service';
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-supprimerabonne',
   templateUrl: './supprimerabonne.page.html',
@@ -19,7 +21,10 @@ export class SupprimerabonnePage implements OnInit {
   suppressionImpossible = true;
   idBibliothecaire: number;
 
-  constructor(private formBuilder: FormBuilder, private bibliothecaireService: BibliothecaireService, private abonneService: AbonneService) { }
+  constructor(private formBuilder: FormBuilder,
+              private bibliothecaireService: BibliothecaireService,
+              private abonneService: AbonneService,
+              private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.idBibliothecaire = parseInt(this.bibliothecaireService.recupererDonneesJeton().id);
@@ -57,17 +62,33 @@ export class SupprimerabonnePage implements OnInit {
 
   supprimerAbonne() {
     if (this.abonne.id !== 0){
-      this.messageAlerte = '';
-      this.abonneService.supprimerUnAbonne(this.abonne.id).subscribe((message) => {
-          this.messageInfo = message;
-          this.suppressionImpossible = true;
-          this.abonne = new Abonne(0, '', '', '', '', '', '', '', 0, '', 0, 0);
-      });
-      this.suppForm.patchValue({
-        id: ''
+      this.alertCtrl.create({
+        header: "Confirmation",
+        message: "Confirmez-vous la suppression ?",
+        buttons: [
+          {
+            text: "Non",
+            role: "Cancel"
+          },
+          {
+            text: "Oui",
+            handler: () => {
+              this.messageAlerte = '';
+              this.abonneService.supprimerUnAbonne(this.abonne.id).subscribe((message) => {
+                  this.messageInfo = message;
+                  this.suppressionImpossible = true;
+                  this.abonne = new Abonne(0, '', '', '', '', '', '', '', 0, '', 0, 0);
+              });
+              this.suppForm.patchValue({
+                id: ''
+              });
+            }
+          }]
+      })
+      .then(alertElement => {
+        alertElement.present();
       });
     }
-
   }
 
 
