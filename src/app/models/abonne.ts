@@ -1,5 +1,3 @@
-import { DatePipe } from "@angular/common";
-
 export class Abonne {
   public id: number;
   public Prenom: string;

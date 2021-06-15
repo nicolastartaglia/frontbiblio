@@ -108,46 +108,96 @@
           <ion-row>
             <ion-col size-sm="5" offset-sm="1">
               <ion-button color="danger" shape="full" expand="block" [disabled]="indisponbibleALaReservation(objet)"
-                (click)="afficherFormulaire(objet.id)">
+                (click)="afficherFormulaireReservation(objet.id)">
                 Réserver
               </ion-button>
             </ion-col>
             <ion-col size-sm="5" offset-sm="1">
-              <ion-button color="success" shape="full" expand="block" (click)="ajouterCommentaire()">
+              <ion-button color="success" shape="full" expand="block" (click)="afficherFormulaireCommentaire(objet.id)">
                 Commenter
               </ion-button>
             </ion-col>
           </ion-row>
         </ion-col>
       </ion-row>
-
       <form [formGroup]="reserverForm" (ngSubmit)="reserverObjet(objet.id)">
-        <ion-row id="inputForm{{objet.id}}" style="display: none;">
-          <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-            <ion-item>
-              <ion-label position="floating">Votre numéro d'abonné</ion-label>
-              <ion-input formControlName="id" type="text"></ion-input>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row id="choixForm{{objet.id}}" style="display: none;">
-          <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-            <ion-row>
-              <ion-col size-sm="5" offset-sm="1">
-                <ion-button type="submit" color="danger" shape="full" expand="block" [disabled]="reserverForm.invalid">
-                  Valider
-                </ion-button>
-              </ion-col>
-              <ion-col size-sm="5" offset-sm="1">
-                <ion-button color="tertiary" shape="full" expand="block" (click)="cacherFormulaire(objet.id)">
-                  Annuler
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-        </ion-row>
+        <div id="inputFormReservation{{objet.id}}" style="display: none;">
+          <ion-row>
+            <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+              <ion-item>
+                <ion-label position="floating">Votre numéro d'abonné</ion-label>
+                <ion-input formControlName="id" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+              <ion-row>
+                <ion-col size-sm="5" offset-sm="1">
+                  <ion-button type="submit" color="danger" shape="full" expand="block"
+                    [disabled]="reserverForm.invalid">
+                    Valider
+                  </ion-button>
+                </ion-col>
+                <ion-col size-sm="5" offset-sm="1">
+                  <ion-button color="tertiary" shape="full" expand="block"
+                    (click)="cacherFormulaireReservation(objet.id)">
+                    Annuler
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </div>
       </form>
+      <form [formGroup]="commenterForm" (ngSubmit)="commenterObjet(objet.id)">
+        <div id="inputFormCommentaire{{objet.id}}" style="display: none;">
+          <ion-row>
+            <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+              <ion-item>
+                <ion-label position="floating">Votre numéro d'abonné</ion-label>
+                <ion-input formControlName="id" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+              <ion-item>
+                <ion-label position="floating">Commentaire</ion-label>
+                <ion-textarea rows="6" formControlName="Commentaire"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+              <ion-row>
+                <ion-col size-sm="5" offset-sm="1">
+                  <ion-button type="submit" color="danger" shape="full" expand="block"
+                    [disabled]="commenterForm.invalid">
+                    Valider
+                  </ion-button>
+                </ion-col>
+                <ion-col size-sm="5" offset-sm="1">
+                  <ion-button color="tertiary" shape="full" expand="block"
+                    (click)="cacherFormulaireCommentaire(objet.id)">
+                    Annuler
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+      <ion-row >
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <span class="messageAlerte">
+            {{ messageAlerte[objet.id] }}
+          </span>
+          <span class="messageInfo">
+            {{ messageInfo2[objet.id] }}
+          </span>
+        </ion-col>
+      </ion-row>
     </ng-container>
-
   </ion-grid>
 </ion-content>

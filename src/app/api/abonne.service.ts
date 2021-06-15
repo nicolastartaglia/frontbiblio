@@ -85,6 +85,16 @@ export class AbonneService {
       );
   }
 
+  verifierAbonne(id: number): Observable<any> {
+    return this.httpClient.get(this.baseUrlAbonne+id+"/verifier", { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
   obtenirLeDernierEmpruntDunAbonne(id: number): Observable<any> {
     return this.httpClient.get(this.baseUrlAbonne+"emprunt/"+id, { headers: this.bibliothecaireService.headers })
       .pipe(

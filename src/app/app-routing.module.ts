@@ -58,10 +58,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/abonne/abonne.module').then( m => m.AbonnePageModule),
     canActivate: [AuthentificationGuard]
   },
+  // {
+  //   path: 'commentaire',
+  //   loadChildren: () => import('./pages/commentaire/commentaire.module').then( m => m.CommentairePageModule),
+  //   canActivate: [AuthentificationGuard]
+  // },
   {
-    path: 'commentaire',
-    loadChildren: () => import('./pages/commentaire/commentaire.module').then( m => m.CommentairePageModule),
-    canActivate: [AuthentificationGuard]
+    path: 'commentaire/:idObjet',
+    loadChildren: () => import('./pages/commentaire/commentaire.module').then( m => m.CommentairePageModule)
+
   },
   {
     path: 'mediatheque',

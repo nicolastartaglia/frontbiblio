@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Emprunt } from '../models/emprunt';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { BibliothecaireService } from './bibliothecaire.service';
-
-
-
-
 @Injectable({
   providedIn: 'root'
 })
