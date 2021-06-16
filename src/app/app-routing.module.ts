@@ -146,7 +146,13 @@ const routes: Routes = [
   {
     path: 'rechercher-details/:idObjet',
     loadChildren: () => import('./pages/rechercher-details/rechercher-details.module').then( m => m.RechercherDetailsPageModule)
+  },
+  {
+    path: 'traite-commentaire',
+    loadChildren: () => import('./pages/traite-commentaire/traite-commentaire.module').then( m => m.TraiteCommentairePageModule),
+    canActivate: [AuthentificationGuard]
   }
+
 
 
 

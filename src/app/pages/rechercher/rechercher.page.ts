@@ -25,9 +25,9 @@ export class RechercherPage implements OnInit {
   initRecherche: boolean;
 
   constructor(private formBuilder: FormBuilder,
-              private objetService: ObjetService,
-              private empruntService: EmpruntService,
-              private abonneService: AbonneService) { }
+    private objetService: ObjetService,
+    private empruntService: EmpruntService,
+    private abonneService: AbonneService) { }
 
   ngOnInit() {
     this.rechercheForm = this.formBuilder.group({
@@ -52,11 +52,11 @@ export class RechercherPage implements OnInit {
     this.objetService.TypeObjetRecherche = this.rechercheForm.value.TypeObjetRecherche;
     this.objets = this.objetService.refreshObjets.pipe(switchMap(_ => this.objetService.obtenirQuelquesObjets(this.rechercheForm.value)));
     this.objets.subscribe((objets) => {
-      if(this.initRecherche) {
+      if (objets.length > 0 && this.initRecherche) {
         this.messageInfo2 = new Object();
         this.messageAlerte = new Object();
         objets.forEach(objet => {
-          const obj = {[objet.id]: ""};
+          const obj = { [objet.id]: "" };
           Object.assign(this.messageInfo2, obj);
           Object.assign(this.messageAlerte, obj);
         });
@@ -65,10 +65,10 @@ export class RechercherPage implements OnInit {
     });
   }
 
-  indisponbibleALaReservation(objet: Objet): boolean{
+  indisponbibleALaReservation(objet: Objet): boolean {
     const dateReservation = (new Date(objet.DateReservation)).valueOf();
     const dureeReservation = Math.floor((this.dateJour - dateReservation) / (1000 * 60 * 60 * 24));
-    if(dureeReservation > this.empruntService.dureeMaxReservation){
+    if (dureeReservation > this.empruntService.dureeMaxReservation) {
       return false;
     }
     return true;
@@ -78,8 +78,8 @@ export class RechercherPage implements OnInit {
     this.messageInfo2[id] = '';
     this.messageAlerte[id] = '';
     this.abonneService.verifierAbonne(this.reserverForm.value.id).subscribe((data) => {
-      if(data.message === "ok"){
-        this.objetService.reserverUnObjet({objetId: id, ReservePar: this.reserverForm.value.id}).subscribe((data) => {
+      if (data.message === "ok") {
+        this.objetService.reserverUnObjet({ objetId: id, ReservePar: this.reserverForm.value.id }).subscribe((data) => {
           this.cacherFormulaireReservation(id);
           this.objetService.refreshObjets.next(true);
           this.messageInfo2[id] = "Réservation validée"
@@ -90,41 +90,41 @@ export class RechercherPage implements OnInit {
     });
   }
 
-  afficherFormulaireCommentaire(id: number){
+  afficherFormulaireCommentaire(id: number) {
     this.cacherFormulaireReservation(id);
-    document.getElementById("inputFormCommentaire"+id).style.display = "block";
+    document.getElementById("inputFormCommentaire" + id).style.display = "block";
   }
 
-  afficherFormulaireReservation(id: number){
+  afficherFormulaireReservation(id: number) {
     this.cacherFormulaireCommentaire(id);
-    document.getElementById("inputFormReservation"+id).style.display = "block";
+    document.getElementById("inputFormReservation" + id).style.display = "block";
   }
 
-  cacherFormulaireReservation(id: number){
+  cacherFormulaireReservation(id: number) {
     this.messageInfo2[id] = '';
     this.messageAlerte[id] = '';
     this.reserverForm.patchValue({
       id: ''
     });
-    document.getElementById("inputFormReservation"+id).style.display = "none";
+    document.getElementById("inputFormReservation" + id).style.display = "none";
   }
 
-  cacherFormulaireCommentaire(id: number){
+  cacherFormulaireCommentaire(id: number) {
     this.messageInfo2[id] = '';
     this.messageAlerte[id] = '';
     this.commenterForm.patchValue({
       id: '',
-      commentaire: ''
+      Commentaire: ''
     });
-    document.getElementById("inputFormCommentaire"+id).style.display = "none";
+    document.getElementById("inputFormCommentaire" + id).style.display = "none";
   }
 
-  commenterObjet(id: number){
+  commenterObjet(id: number) {
     this.messageInfo2[id] = '';
     this.messageAlerte[id] = '';
     this.abonneService.verifierAbonne(this.commenterForm.value.id).subscribe((data) => {
-      if(data.message === "ok"){
-        this.objetService.commenterUnObjet(id, {Commentaire: this.commenterForm.value.Commentaire}).subscribe((commentaire) => {
+      if (data.message === "ok") {
+        this.objetService.commenterUnObjet(id, { Commentaire: this.commenterForm.value.Commentaire }).subscribe((commentaire) => {
           this.cacherFormulaireCommentaire(id);
           this.messageInfo2[id] = "Commentaire enregistré pour validation ultérieure";
         });
