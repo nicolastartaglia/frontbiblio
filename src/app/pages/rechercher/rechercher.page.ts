@@ -68,7 +68,7 @@ export class RechercherPage implements OnInit {
   indisponbibleALaReservation(objet: Objet): boolean {
     const dateReservation = (new Date(objet.DateReservation)).valueOf();
     const dureeReservation = Math.floor((this.dateJour - dateReservation) / (1000 * 60 * 60 * 24));
-    if (dureeReservation > this.empruntService.dureeMaxReservation) {
+    if (dureeReservation > this.empruntService.dureeMaxReservation && objet.Etat == "correct") {
       return false;
     }
     return true;

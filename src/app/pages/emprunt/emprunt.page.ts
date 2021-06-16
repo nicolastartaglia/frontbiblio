@@ -177,7 +177,8 @@ export class EmpruntPage implements OnInit {
   }
 
   renouvelerAbonnement() {
-    this.abonneService.renouvelerAbonnement(this.abonne.id).subscribe(
+    const dateLimiteAbonnement = new Date((new Date()).setDate((new Date()).getDate() + 365));
+    this.abonneService.renouvelerAbonnement(this.abonne.id, dateLimiteAbonnement).subscribe(
       (data) => {
          const pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
          this.dateLimiteAffichee = data.DateLimiteAbonnement.substring(0, 10).replace(pattern, '$3-$2-$1');

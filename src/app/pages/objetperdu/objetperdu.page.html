@@ -1,9 +1,75 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>objetperdu</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="logo"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span>Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+  <ion-grid>
 
+      <ng-container *ngFor="let objet of objets | async">
+        <ion-row>
+          <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+            <ion-item>
+              <ion-label>
+                <h5>{{objet.Titre}}</h5>
+                <p *ngIf="objet.AuteurScenariste !== ''">Auteur: {{objet.AuteurScenariste}}</p>
+                <p *ngIf="objet.Realisateur !== ''">Réalisateur: {{objet.Realisateur}}</p>
+                <p *ngIf="objet.Artiste !== ''">Artiste: {{objet.Artiste}}</p>
+                <p *ngIf="objet.Scenariste !== ''">Scénariste: {{objet.Scenariste}}</p>
+                <p *ngIf="objet.Dessinateur !== ''">Dessinateur: {{objet.Dessinateur}}</p>
+                <p>ID: {{objet.id}}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+            <ion-row>
+              <ion-col size-sm="5" offset-sm="1">
+                <ion-button color="success" shape="full" expand="block" (click)="reintegrerObjet(objet.id)">
+                  Réintégrer
+                </ion-button>
+              </ion-col>
+              <ion-col size-sm="5" offset-sm="1">
+                <ion-button color="danger" shape="full" expand="block" (click)="supprimerObjet(objet.id)">
+                  Supprimer
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageInfo">
+          {{ messageInfo }}
+        </span>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="(objets | async)?.length==0">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageInfo">
+          Aucun objet perdu
+        </span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-row>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/bibliothecaire']">
+              Retour
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

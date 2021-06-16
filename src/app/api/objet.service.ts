@@ -109,6 +109,36 @@ export class ObjetService {
 
   }
 
+  obtenirTousLesObjetsPerdus(): Observable<any> {
+    return this.httpClient.get(this.baseUrlObjet+"perdu", { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  obtenirTousLesObjetsAbimes(): Observable<any> {
+    return this.httpClient.get(this.baseUrlObjet+"abime", { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  reintegrerObjet(id: number): Observable<any> {
+    return this.httpClient.put(this.baseUrlObjet+"reintegrer/"+id, { headers: this.bibliothecaireService.headers })
+      .pipe(
+        map((data: any) => {
+          return data;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

@@ -49,7 +49,7 @@ export class AjouterobjetPage implements OnInit {
       Travee: [''],
       EtagereBac: [''],
       Code3C: [''],
-      Etat: [''],
+      Etat: ['Correct'],
       Reserve: [''],
       DateReservation: [new Date("2020-01-01")],
       TypeObjet: ['ecrit'],

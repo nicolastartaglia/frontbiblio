@@ -107,7 +107,8 @@ export class AbonneService {
   }
 
   payerLAmende(id: number): Observable<any> {
-    return this.httpClient.put(this.baseUrlAbonne+"payerAmende/"+id, { headers: this.bibliothecaireService.headers })
+    console.log(this.bibliothecaireService.headers);
+    return this.httpClient.put(this.baseUrlAbonne+"payerAmende/"+id, {Amende: 0}, { headers: this.bibliothecaireService.headers })
     .pipe(
       map((data) => {
         console.log(data);
@@ -117,8 +118,8 @@ export class AbonneService {
     );
   }
 
-  renouvelerAbonnement(id: number): Observable<any> {
-    return this.httpClient.put(this.baseUrlAbonne+"renouvelerAbonnement/"+id, { headers: this.bibliothecaireService.headers })
+  renouvelerAbonnement(id: number, DateLimiteAbonnement: Date): Observable<any> {
+    return this.httpClient.put(this.baseUrlAbonne+"renouvelerAbonnement/"+id, {DateLimiteAbonnement: DateLimiteAbonnement}, { headers: this.bibliothecaireService.headers })
     .pipe(
       map((data) => {
         console.log("data from bd");

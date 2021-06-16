@@ -151,6 +151,9 @@ export class RetourPage implements OnInit {
             document.getElementById("ok" + objetId).style.display = "block";
             document.getElementById("wrong" + objetId).style.display = "none";
             this.nbRetours = this.nbRetours + 1;
+            if(this.nbRetours == this.nbEmprunts){
+              this.retourValide = true;
+            }
           }
         }
         if(retour.Etat == "perdu"){

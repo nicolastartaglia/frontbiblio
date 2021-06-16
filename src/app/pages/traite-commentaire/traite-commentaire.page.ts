@@ -22,7 +22,7 @@ export class TraiteCommentairePage implements OnInit {
   initCommentaire: boolean;
 
   constructor(private commentaireService: CommentaireService,
-    private bibliothecaireService: BibliothecaireService) { }
+              private bibliothecaireService: BibliothecaireService) { }
 
   ngOnInit() {
     this.initCommentaire = false;
