@@ -126,7 +126,7 @@ export class RechercherPage implements OnInit {
       if (data.message === "ok") {
         this.objetService.commenterUnObjet(id, { Commentaire: this.commenterForm.value.Commentaire }).subscribe((commentaire) => {
           this.cacherFormulaireCommentaire(id);
-          this.messageInfo2[id] = "Commentaire enregistré pour validation ultérieure";
+          this.messageInfo2[id] = "Commentaire enregistré et en attente de confirmation";
         });
       } else {
         this.messageAlerte[id] = data.message;
