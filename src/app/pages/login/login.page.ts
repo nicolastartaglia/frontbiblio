@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { BibliothecaireService } from '../../api/bibliothecaire.service';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -14,21 +15,29 @@ export class LoginPage implements OnInit {
   isSubmitted = false;
   seConnecter$: any;
   message = '';
-  // menuReferent = [
-  //   {url:'/rechercher', title: 'Rechercher'},
-  //   {url:'/logout', title: 'Se déconnecter'}
-  // ];
+  menuReferent = [
+    {url:'/rechercher', title: 'Rechercher'}
+  ];
+
+  menuBibliothecaire = [
+    {url:'/emprunt', title: 'Enregistrer un emprunt'},
+    {url:'/retour', title: 'Enregistrer un retour'},
+    {url:'/abonne', title: 'Gestion des abonnés'},
+    {url:'/commentaire', title: 'Commentaires à traiter'},
+    {url:'/mediatheque', title: 'Gestion de la médiathèque'}
+  ];
 
 
   constructor(public formBuilder: FormBuilder,
               private bibliothecaireService: BibliothecaireService,
-              private router: Router) { }
+              private router: Router,
+              private menuCtrl: MenuController) { }
 
 
   ngOnInit() {
     this.connexion = this.formBuilder.group({
-      Email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      Password: ['', [Validators.required, Validators.minLength(2)]]
+      Email: ['', [Validators.required, Validators.email]],
+      Password: ['', [Validators.required, Validators.minLength(4)]]
     });
     console.log("ngOnInit login page");
   }
@@ -43,17 +52,18 @@ export class LoginPage implements OnInit {
       console.log('Tous les champs sont requis')
       return false;
     } else {
-      console.log(this.connexion.value);
-
       this.seConnecter$ = this.bibliothecaireService.seConnecter(this.connexion.value)
         .subscribe(
           (data) => {
             if (this.bibliothecaireService.estConnecte()) {
               if (this.bibliothecaireService.estReferent()) {
-                // this.bibliothecaireService.pages$.next(this.menuReferent);
-                // this.bibliothecaireService.seDeconnecte$.next({affiche: true});
+                this.bibliothecaireService.pages$.next(this.menuReferent);
+                this.bibliothecaireService.seDeconnecte$.next({affiche: true});
                 this.router.navigateByUrl('/referent');
               } else {
+                this.bibliothecaireService.pages$.next(this.menuBibliothecaire);
+                this.bibliothecaireService.seDeconnecte$.next({affiche: true});
+                this.menuCtrl.close();
                 this.router.navigateByUrl('/bibliothecaire');
               }
             } else {

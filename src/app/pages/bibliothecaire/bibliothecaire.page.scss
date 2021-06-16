@@ -29,17 +29,17 @@
 
 }
 
-#it1 {
+#option1 {
   border-radius: 10px 10px 0 0;
   border-top: solid 1px;
 }
 
-#it1, #it2, #it3 {
+#option1, #option2, #option3, #option4, #option5 {
   border-right: solid 1px;
   border-left: solid 1px;
 }
 
-#it3 {
+#option5 {
   border-radius: 0 0 10px 10px;
   border-bottom: solid 1px;
 }
@@ -68,7 +68,11 @@
   height: 5vh;
 }
 
-.titre {
+ion-title {
+  font-family: 'Permanent Marker', cursive;
+}
+
+.logo {
   padding: 5px;
 }
 

@@ -5,7 +5,7 @@ import { Bibliothecaire } from '../../models/bibliothecaire';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-referent',
@@ -23,18 +23,13 @@ export class ReferentPage implements OnInit {
   message: '';
   idBibliothecaire: number;
 
-
   bibliothecaires: Observable<Array<Bibliothecaire>>;
 
-  constructor(private bibliothecaireService: BibliothecaireService, private router: Router, private formBuilder: FormBuilder ) { }
+  constructor(private bibliothecaireService: BibliothecaireService,
+              private alertCtrl: AlertController,
+              private formBuilder: FormBuilder ) { }
 
   ngOnInit() {
-    if (this.bibliothecaireService.estConnecte()) {
-      console.log("headers");
-      console.log(this.bibliothecaireService.headers);
-      if (!this.bibliothecaireService.estReferent()) {
-        this.router.navigateByUrl('');
-      }
       this.addForm = this.formBuilder.group({
         Id: [''],
         Nom: [''],
@@ -50,20 +45,32 @@ export class ReferentPage implements OnInit {
           this.Nom = data.Nom;
           this.Prenom = data.Prenom;
       });
-      this.bibliothecaireService.pages$.next(this.menuReferent);
-      this.bibliothecaireService.seDeconnecte$.next({affiche: true});
       this.bibliothecaires = this.bibliothecaireService.refreshBibliothecaires.pipe(switchMap(_ => this.bibliothecaireService.obtenirTousLesBibliothecaires()));
-    } else {
-      this.router.navigateByUrl('');
-    }
   }
 
   supprimerBibliothecaire(id) {
-      this.bibliothecaireService.supprimerUnBibliothecaire(id).subscribe(
-        () => {},
-        (err) => console.log(err),
-        () => { console.log("terminé");  this.bibliothecaireService.refreshBibliothecaires.next(true);  }
-      );
+    this.alertCtrl.create({
+      header: "Confirmation",
+      message: "Confirmez-vous la suppression ?",
+      buttons: [
+        {
+          text: "Non",
+          role: "Cancel"
+        },
+        {
+          text: "Oui",
+          handler: () => {
+            this.bibliothecaireService.supprimerUnBibliothecaire(id).subscribe(
+              () => {  },
+              (err) => console.log(err),
+              () => { setTimeout(() => {this.bibliothecaireService.refreshBibliothecaires.next(true)}, 100);  }
+            );
+          }
+      }]
+    })
+    .then(alertElement => {
+      alertElement.present();
+    });
   }
 
   ajouterBibliothecaire() {
@@ -79,7 +86,6 @@ export class ReferentPage implements OnInit {
       Referent: 'false',
       Statut: 'Actif'
     });
-
   }
 
 }

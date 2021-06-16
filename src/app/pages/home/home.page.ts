@@ -9,17 +9,11 @@ import { BibliothecaireService } from '../../api/bibliothecaire.service';
 })
 export class HomePage implements OnInit {
 
-  
-
-
-
-  constructor(private animationCtrl: AnimationController, private bibliothecaireService: BibliothecaireService) {}
+  constructor(private animationCtrl: AnimationController,
+              private bibliothecaireService: BibliothecaireService) {}
 
   ngOnInit() {
     this.animerPage();
-
-
-    console.log("ngOnInit home page");
   }
 
   animerPage() {
@@ -43,7 +37,6 @@ export class HomePage implements OnInit {
     .iterations(1)
     .fromTo('transform', 'translateY(1000%)', 'translateY(30vh)')
     .fromTo('opacity', '0.2', '1');
-
 
     animation1.play();
     animation2.play();

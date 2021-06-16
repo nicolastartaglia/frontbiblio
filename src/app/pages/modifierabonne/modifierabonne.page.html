@@ -1,0 +1,153 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="logo"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span>Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <form [formGroup]="idForm" (ngSubmit)="afficheAbonne()">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Numéro d'abonné</ion-label>
+            <ion-input formControlName="id" type="text" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button type="submit" color="primary" shape="full" expand="block" [disabled]="idForm.invalid">
+                Afficher
+              </ion-button>
+            </ion-col>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/abonne']">
+                Retour
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageAlerte">
+          {{ messageAlerte1 }}
+        </span>
+      </ion-col>
+    </ion-row>
+    <form [formGroup]="modifForm" (ngSubmit)="modifierAbonne()" *ngIf="idValide">
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Nom</ion-label>
+          <ion-input formControlName="Nom" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Prénom</ion-label>
+          <ion-input formControlName="Prenom" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input formControlName="Email" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Rue</ion-label>
+          <ion-input formControlName="Rue" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Code Postal</ion-label>
+          <ion-input formControlName="CodePostal" type="text" required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Ville</ion-label>
+          <ion-input formControlName="Ville" type="text" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Date limite de validité</ion-label>
+          <ion-input formControlName="DateLimiteAbonnement" type="date" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Amende</ion-label>
+          <ion-input formControlName="Amende" type="text" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-item>
+          <ion-label position="floating">Date d'emprunt possible</ion-label>
+          <ion-input formControlName="DateEmpruntPossible" type="date" required>
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-row>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button type="submit" color="danger" shape="full" expand="block" [disabled]="modifForm.invalid">
+              Valider
+            </ion-button>
+          </ion-col>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/abonne']">
+              Retour
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    </form>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageAlerte">
+          {{ messageAlerte2 }}
+        </span>
+        <span class="messageInfo">
+          {{ messageInfo }}
+        </span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

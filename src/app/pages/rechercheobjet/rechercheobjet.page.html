@@ -1,0 +1,111 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="logo"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span>Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <form [formGroup]="rechercheForm" (ngSubmit)="rechercheObjet()">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-list>
+            <ion-radio-group formControlName="TypeObjetRecherche" #TypeObjetForm required>
+              <ion-list-header>
+                <ion-label>Type d'objet</ion-label>
+              </ion-list-header>
+              <ion-item>
+                <ion-label>Écrit</ion-label>
+                <ion-radio slot="start" value="ecrit"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>Audio</ion-label>
+                <ion-radio slot="start" value="audio"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>Vidéo</ion-label>
+                <ion-radio slot="start" value="video"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Titre</ion-label>
+            <ion-input formControlName="TitreRecherche" type="text" #TitreForm></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label position="floating">Auteur/Artiste/Scénariste/Réalisateur</ion-label>
+            <ion-input formControlName="AuteurArtisteRecherche" type="text" #AuteurForm></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button type="submit" color="primary" shape="full" expand="block" [disabled]="(TitreForm.value === '' && AuteurForm.value === '' ) || rechercheForm.invalid">
+                Rechercher
+              </ion-button>
+            </ion-col>
+            <ion-col size-sm="5" offset-sm="1">
+              <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/mediatheque']">
+                Retour
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </form>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageInfo">
+          {{ messageInfo }}
+        </span>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="(objets | async)?.length==0">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageInfo">
+          Aucun objet trouvé
+        </span>
+      </ion-col>
+    </ion-row>
+    <ng-container *ngFor="let objet of objets | async">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label>
+              <h5>{{objet.Titre}}</h5>
+              <p *ngIf="objet.AuteurScenariste !== ''">Auteur: {{objet.AuteurScenariste}}</p>
+              <p *ngIf="objet.Realisateur !== ''">Réalisateur: {{objet.Realisateur}}</p>
+              <p *ngIf="objet.Artiste !== ''">Artiste: {{objet.Artiste}}</p>
+              <p *ngIf="objet.Scenariste !== ''">Scénariste: {{objet.Scenariste}}</p>
+              <p *ngIf="objet.Dessinateur !== ''">Dessinateur: {{objet.Dessinateur}}</p>
+              <p>ID: {{objet.id}}</p>
+            </ion-label>
+            <div class="item-note" item-end>
+              <ion-icon name="create" style="zoom:2.0" [routerLink]="['/objet-details/', objet.id]">
+              </ion-icon>
+              <ion-icon name="trash" style="zoom:2.0" (click)="supprimerObjet(objet.id)"></ion-icon>
+            </div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+</ion-content>
+
+
+

@@ -1,0 +1,247 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="logo"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span>Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ng-container *ngIf="initRetour">
+      <form [formGroup]="idForm" (ngSubmit)="afficheAbonne()">
+        <ion-row>
+          <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+            <ion-item>
+              <ion-label position="floating" class=saisie>Numéro d'abonné</ion-label>
+              <ion-input formControlName="id" type="text" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+            <ion-row>
+              <ion-col size-sm="5" offset-sm="1">
+                <ion-button type="submit" color="danger" shape="full" expand="block" [disabled]="idForm.invalid">
+                  Commencer
+                </ion-button>
+              </ion-col>
+              <ion-col size-sm="5" offset-sm="1">
+                <ion-button color="tertiary" shape="full" expand="block" [routerLink]="['/bibliothecaire']">
+                  Retour
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ng-container>
+    <ion-row>
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <span class="messageAlerte">
+          {{ messageAlerte1 }}
+        </span>
+        <span class="messageInfo">
+          {{ messageInfo }}
+        </span>
+      </ion-col>
+    </ion-row>
+    <ng-container *ngIf="idValide">
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-item>
+            <ion-label><strong>{{ abonne.Prenom }} {{ abonne.Nom }}</strong></ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="6">
+              <ion-item>
+                <ion-label>Date d'emprunt:</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="6" >
+              <ion-item class="ion-text-end">
+                <ion-label>{{ dateEmpruntAffichee }}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="6">
+              <ion-item>
+                <ion-label>Date limite de retour:</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="6">
+              <ion-item class="ion-text-end">
+                <ion-label>{{ dateLimiteAffichee }}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="6">
+              <ion-item>
+                <ion-label>Date de retour:</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="6">
+              <ion-item class="ion-text-end">
+                <ion-label>{{ dateRetourAffichee }}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="6">
+              <ion-item>
+                <ion-label>Retard en jours:</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="6">
+              <ion-item [ngClass]="retardRetour > 0 ? 'alerte ion-text-end' : 'info ion-text-end'">
+                <ion-label>{{ retardRetour }}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="6">
+              <ion-item>
+                <ion-label>Pénalités:</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="6">
+              <ion-item>
+                <ion-label [ngClass]="abonne.Amende > 0 ? 'alerte ion-text-end' : 'info ion-text-end'">{{ abonne.Amende }} €</ion-label>
+                <div class="item-note" item-end *ngIf="abonne.Amende > 0">
+                  <ion-icon name="close-outline" style="zoom:2.0" (click)="solderAmende()"></ion-icon>
+                </div>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-row>
+            <ion-col size-sm="6">
+              <ion-item>
+                <ion-label>Nombre d'objets empruntés:</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size-sm="6">
+              <ion-item class="ion-text-end">
+                <ion-label>{{ nbEmprunts }}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ng-container *ngFor="let emprunt of emprunts">
+        <ion-row>
+          <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+            <ion-item>
+              <ion-label>
+                <h2>{{emprunt.Titre}}</h2>
+                <p>ID: {{emprunt.id}}</p>
+              </ion-label>
+              <div id="wrong{{emprunt.id}}" class="item-note" item-end>
+                <ion-img src="assets/images/wrong.svg" class="statut"></ion-img>
+              </div>
+              <div id="ok{{emprunt.id}}" class="item-note" style="display: none;" item-end>
+                <ion-img src="assets/images/ok.svg" class="statut"></ion-img>
+              </div>
+              <ion-list>
+                <ion-radio-group id="etat{{emprunt.id}}" value="correct" (ionChange)="evalAmende($event)">
+                  <ion-list-header>
+                    <ion-label>État</ion-label>
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Correct</ion-label>
+                    <ion-radio slot="start" value="correct"></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Abîmé</ion-label>
+                    <ion-radio slot="start" value="abime"></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Perdu</ion-label>
+                    <ion-radio slot="start" value="perdu"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </ion-list>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ng-container>
+      <form [formGroup]="addForm" (ngSubmit)="ajouterObjet()" *ngIf="idValide && !retourValide">
+        <ion-row>
+          <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+            <ion-item>
+              <ion-label position="floating" class="saisie">Saisissez l'identifiant de l'objet retourné:</ion-label>
+              <ion-input formControlName="idObjet" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+            <ion-row>
+              <ion-col size-sm="5" offset-sm="1">
+                <ion-button color="danger" shape="full" expand="block" [disabled]="addForm.invalid" type="submit">
+                  Ajouter
+                </ion-button>
+              </ion-col>
+              <ion-col size-sm="5" offset-sm="1">
+                <ion-button color="tertiary" shape="full" expand="block" (click)="reSelectionnerIdAbonne()">
+                  Annuler
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </form>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <span class="messageAlerte">
+            {{ messageAlerte2 }}
+          </span>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+    <ion-row *ngIf="retourValide">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+        <ion-row>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button color="danger" shape="full" expand="block" (click)="enregistrerRetour()">
+              Valider
+            </ion-button>
+          </ion-col>
+          <ion-col size-sm="5" offset-sm="1">
+            <ion-button color="tertiary" shape="full" expand="block" (click)="reSelectionnerIdAbonne()">
+              Annuler
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

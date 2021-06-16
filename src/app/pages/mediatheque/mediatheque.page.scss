@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.item {
+  width: 100%;
+  height: 10vh;
+  background-color: #0D1670;
+  // background-image: url("../../../assets/images/plank.svg");
+  color: white;
+  position: relative;
+  // border-radius: 10px 10px 10px 10px;
+  border: solid #0D1670;
+
+}
+
+.contenu {
+  position: absolute;
+  top: 50%;
+  text-align: center;
+  transform: translateY(-50%);
+  width: 100%;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 4vh;
+  color: white;
+  text-decoration: underline;
+
+}
+
+#option1 {
+  border-radius: 10px 10px 0 0;
+  border-top: solid 1px;
+}
+
+#option1, #option2, #option3, #option4, #option5, #option6, #option7 {
+  border-right: solid 1px;
+  border-left: solid 1px;
+}
+
+#option7 {
+  border-radius: 0 0 10px 10px;
+  border-bottom: solid 1px;
+}
+
+#rechercher {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5%;
+  height: 10vh;
+}
+
+#map {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5%;
+  height: 5vh;
+}
+
+#avatar {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5%;
+  height: 5vh;
+}
+
+.logo {
+  padding: 5px;
+}
+
+.book {
+  background-image: url("../../../assets/images/biblio.svg");
+  width: 100%;
+  height: 100vh;
+}
+
+ion-content {
+  --ion-background-color: #3880ff;
+}
+
+ion-title {
+  font-family: 'Permanent Marker', cursive;
+}

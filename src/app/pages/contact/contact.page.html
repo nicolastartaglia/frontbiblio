@@ -1,9 +1,51 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>contact</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="logo"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span>Bienvenue</span></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div class="book">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
+          <ion-card>
+            <img src="assets/images/biblio.jpg" alt="ion">
+            <ion-card-header>
+              <ion-card-title>Médiathèque Biblio</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              Au cœur du quartier du Point du Jour, nous serons heureux de vous accueillir dans un espace de 700 m 2,
+              réparti
+              sur deux niveaux (espace jeunesse, adulte et numérique).
+              Vous profiterez d’un "petit bijou" architectural qui offre de vastes espaces, baignés de lumière naturelle
+              avec
+              vue sur un jardin paysagé.
+            </ion-card-content>
+            <ion-card-content>
+              <p>Médiathèque Biblio</p>
+              <p>Place de la Biblio</p>
+              <p>
+                <ion-icon name="call-outline"></ion-icon>: 01 86 63 12 99
+              </p>
+            </ion-card-content>
+            <ion-card-content>
+              <p><strong>Horaires</strong></p>
+              <p>• Mardi : 10-12h et 15-19h</p>
+              <p>• Mercredi : 10 -19h</p>
+              <p>• Jeudi : Fermé le matin, 15-19h</p>
+              <p>• Vendredi : 10-12h et 15-19h</p>
+              <p>• Samedi : 10-19h sans interruption</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

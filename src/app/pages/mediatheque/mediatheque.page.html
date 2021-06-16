@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="logo"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span>Bienvenue {{ Prenom }} {{ Nom }}</span></ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="book">
+  <ion-grid>
+    <ion-row id="it1">
+      <ion-col  size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" [routerLink]="['/rechercheobjet']">
+        <div id="option1" class="item">
+          <div class="contenu">Rechercher</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row id="it2">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" [routerLink]="['/ajouterobjet']">
+        <div id="option2" class="item">
+          <div class="contenu">Ajouter</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row id="it3">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" [routerLink]="['/modifierobjet']">
+        <div id="option3" class="item">
+          <div class="contenu">Modifier</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row id="it4">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" [routerLink]="['/supprimerobjet']">
+        <div id="option4" class="item">
+          <div class="contenu">Supprimer</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row id="it5">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" [routerLink]="['/objetperdu']">
+        <div id="option5" class="item">
+          <div class="contenu">Objets perdus</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row id="it6">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" [routerLink]="['/objetabime']">
+        <div id="option6" class="item">
+          <div class="contenu">Objets abîmés</div>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row id="it7">
+      <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3" (click)="revenir()">
+        <div id="option7" class="item">
+          <div class="contenu">Terminer</div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+</ion-content>
+

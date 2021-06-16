@@ -1,6 +1,12 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Connexion en tant que bibliothécaire</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-thumbnail slot="start">
+      <ion-img src="assets/images/logo.svg" class="logo"></ion-img>
+    </ion-thumbnail>
+    <ion-title><span>Bienvenue</span></ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -31,13 +37,19 @@
             Mot de passe requis
           </span>
           <span class="error ion-padding" *ngIf="isSubmitted && errorControl.Password.errors?.minlength">
-            Name should be min 2 chars long.
+            Pas moins de 4 caractères pour le mot de passe dans un contexte de démo.
           </span>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-sm="8" offset-sm="2" size-lg="6" offset-lg="3">
-          <ion-button type="submit" color="primary" expand="block">Valider</ion-button>
+          <ion-row>
+            <ion-col size-sm="4" offset-sm="4">
+              <ion-button type="submit" color="primary" shape="full" expand="block"  [disabled]="connexion.invalid">
+                Valider
+              </ion-button>
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
       <ion-row>
