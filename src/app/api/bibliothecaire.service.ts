@@ -31,8 +31,8 @@ export class BibliothecaireService {
 
   refreshBibliothecaires = new BehaviorSubject<boolean>(true);
 
-  frontUrl = "http://192.168.200.176:4200/";
-  backendUrl = "http://192.168.200.176:8082/";
+  frontUrl = "https://biblio.nicolas-tartaglia.com/";
+  backendUrl = "https://backbiblio.nicolas-tartaglia.com/";
   baseUrlBibliothecaire = this.backendUrl + "bibliothecaire/";
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');

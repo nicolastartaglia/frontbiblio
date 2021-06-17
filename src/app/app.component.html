@@ -13,6 +13,9 @@
             <ion-item *ngIf="seDeconnecte$.value.affiche && dernier" (click)="seDeconnecter()">
               <ion-label>Se déconnecter </ion-label>
             </ion-item>
+            <ion-item *ngIf="dernier">
+              <a href="https://biblio.nicolas-tartaglia.com/assets/apk/biblio.apk">Biblio Android</a>
+            </ion-item>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>

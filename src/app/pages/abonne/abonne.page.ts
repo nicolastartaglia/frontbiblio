@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { BibliothecaireService } from '../../api/bibliothecaire.service';
 import { Animation, AnimationController, MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-abonne',
   templateUrl: './abonne.page.html',
-  styleUrls: ['./abonne.page.scss'],
+  styleUrls: ['./abonne.page.scss']
 })
 export class AbonnePage implements OnInit {
 
   Nom = '';
   Prenom = '';
   idBibliothecaire: number;
+  state = 'normal';
 
   menuAbonne = [
     {url:'/rechercheabonne', title: 'Rechercher un abonné'},
@@ -29,7 +29,7 @@ export class AbonnePage implements OnInit {
     {url:'/mediatheque', title: 'Gestion de la médiathèque'}
   ];
 
-  constructor(private bibliothecaireService: BibliothecaireService, 
+  constructor(private bibliothecaireService: BibliothecaireService,
               private animationCtrl: AnimationController,
               private router: Router,
               private menuCtrl: MenuController) { }
@@ -44,7 +44,7 @@ export class AbonnePage implements OnInit {
     );
     this.bibliothecaireService.seDeconnecte$.next({affiche: true});
     this.bibliothecaireService.pages$.next(this.menuAbonne);
-    this.animerPage();
+   // this.animerPage();
   }
 
   animerPage() {

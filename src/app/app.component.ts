@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BibliothecaireService } from './api/bibliothecaire.service';
 import { Router } from "@angular/router";
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import { Router } from "@angular/router";
 export class AppComponent implements OnInit {
 
   public menuHome = [
+    { title: 'Accueil', url: '/home' },
     { title: 'Rechercher', url: '/rechercher' },
     { title: 'Contact', url: '/contact'},
     { title: 'Se connecter', url: '/login'}
@@ -19,7 +21,9 @@ export class AppComponent implements OnInit {
 
   seDeconnecte$ = this.bibliothecaireService.seDeconnecte$;
 
-  constructor(private bibliothecaireService: BibliothecaireService, private router: Router) {}
+  constructor(private bibliothecaireService: BibliothecaireService,
+              public menuCtrl: MenuController,
+              private router: Router) {}
 
   ngOnInit() {
     this.bibliothecaireService.pages$.next(this.menuHome);
@@ -29,7 +33,11 @@ export class AppComponent implements OnInit {
     sessionStorage.removeItem('biblio');
     this.bibliothecaireService.seDeconnecte$.next({ affiche: false });
     this.bibliothecaireService.pages$.next(this.menuHome);
-    window.location.replace(this.bibliothecaireService.frontUrl + "/home");
+   // window.location.replace(this.bibliothecaireService.frontUrl);
+    this.menuCtrl.close();
+    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/home');
+
   }
 
 }

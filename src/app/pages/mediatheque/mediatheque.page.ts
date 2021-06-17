@@ -46,7 +46,7 @@ export class MediathequePage implements OnInit {
     );
     this.bibliothecaireService.seDeconnecte$.next({affiche: true});
     this.bibliothecaireService.pages$.next(this.menuMediatheque);
-    this.animerPage();
+  //  this.animerPage();
   }
 
   animerPage() {
